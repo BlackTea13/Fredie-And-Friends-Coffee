@@ -1,3 +1,5 @@
+CREATE SCHEMA faf_coffeeshop;
+
 CREATE TABLE district_zip (
     district varchar(20),
     zip int,
@@ -64,6 +66,7 @@ CREATE TABLE menu(
     product_name varchar(600),
     price_per_unit float,
     PRIMARY KEY (product_id)
+
 );
 
 CREATE TABLE orders(
