@@ -106,38 +106,38 @@ def my_blogs():
     return render_template('my-orders.html')
 
 
-@app.route('/view-my-order/')
-def my_blogs():
-    return render_template('my-orders.html')
+# @app.route('/view-my-order/')
+# def my_blogs():
+#     return render_template('my-orders.html')
 
 
-@app.route('/view-orders/')
-def my_blogs():
-    return render_template('view-orders.html')
+# @app.route('/view-orders/')
+# def my_blogs():
+#     return render_template('view-orders.html')
 
 
-@app.route('/view-orders/')
-def my_blogs():
-    return render_template('my-orders.html')
+# @app.route('/view-orders/')
+# def my_blogs():
+#     return render_template('my-orders.html')
 
 
-@app.route('/account/')
-def my_blogs():
-    return render_template('account.html')
+# @app.route('/account/')
+# def my_blogs():
+#     return render_template('account.html')
 
 
-@app.route('/employee/')
-def my_blogs():
-    return render_template('my-orders.html')
+# @app.route('/employee/')
+# def my_blogs():
+#     return render_template('my-orders.html')
 
 
-@app.route('/employee/schedule')
-def my_blogs():
-    return render_template('my-orders.html')
+# @app.route('/employee/schedule')
+# def my_blogs():
+#     return render_template('my-orders.html')
 
-@app.route('/master/')
-def my_blogs():
-    return render_template('master.html')
+# @app.route('/master/')
+# def my_blogs():
+#     return render_template('master.html')
 
 @app.route('/logout')
 def logout(): 
