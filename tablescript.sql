@@ -1,18 +1,20 @@
-DROP SCHEMA IF EXISTS coffeeshop;
+DROP SCHEMA IF EXISTS faf_coffeeshop;
 
 CREATE SCHEMA faf_coffeeshop;
+USE faf_coffeeshop;
 
 DROP TABLE IF EXISTS district_zip;
 CREATE TABLE district_zip (
     district varchar(20),
     zip int,
-    PRIMARY KEY(district, zip)
+    PRIMARY KEY(zip)
 );
 
 DROP TABLE IF EXISTS city_country;
 CREATE TABLE city_country(
     city varchar(40),
-    country varchar(40)
+    country varchar(40),
+    PRIMARY KEY (city)
 );
 
 DROP TABLE IF EXISTS time_slot;
@@ -24,6 +26,8 @@ CREATE TABLE time_slot(
     PRIMARY KEY (time_slot_id)
 );
 
+SHOW FULL COLUMNS FROM district_zip;
+
 DROP TABLE IF EXISTS customers;
 CREATE TABLE customers (
     customer_id int auto_increment,
@@ -32,8 +36,8 @@ CREATE TABLE customers (
     date_of_birth date,
     email_address varchar(320),
     address_line varchar(600),
-    zip varchar(20),
-    city varchar(20),
+    zip int,
+    city varchar(40),
     PRIMARY KEY (customer_id),
     FOREIGN KEY (zip) REFERENCES district_zip(zip),
     FOREIGN KEY (city) REFERENCES city_country(city)
@@ -48,7 +52,7 @@ CREATE TABLE employees (
     email_address varchar(320),
     time_slot_id int,
     address_line varchar(600),
-    zip varchar(20),
+    zip int,
     city varchar(20),
     PRIMARY KEY (employee_id),
     FOREIGN KEY (zip) REFERENCES district_zip(zip),
@@ -62,7 +66,7 @@ CREATE TABLE suppliers(
     telephone_number varchar(15),
     email_address varchar(320),
     address_line varchar(600),
-    zip varchar(20),
+    zip int,
     city varchar(20),
     PRIMARY KEY (supplier_id),
     FOREIGN KEY (zip) REFERENCES district_zip(zip),
