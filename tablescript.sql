@@ -1,16 +1,21 @@
+DROP SCHEMA IF EXISTS coffeeshop;
+
 CREATE SCHEMA faf_coffeeshop;
 
+DROP TABLE IF EXISTS district_zip;
 CREATE TABLE district_zip (
     district varchar(20),
     zip int,
     PRIMARY KEY(district, zip)
 );
 
+DROP TABLE IF EXISTS city_country;
 CREATE TABLE city_country(
     city varchar(40),
     country varchar(40)
 );
 
+DROP TABLE IF EXISTS time_slot;
 CREATE TABLE time_slot(
     time_slot_id int,
     work_day char(10),
@@ -19,6 +24,7 @@ CREATE TABLE time_slot(
     PRIMARY KEY (time_slot_id)
 );
 
+DROP TABLE IF EXISTS customers;
 CREATE TABLE customers (
     customer_id int auto_increment,
     first_name varchar(20) null,
@@ -33,6 +39,7 @@ CREATE TABLE customers (
     FOREIGN KEY (city) REFERENCES city_country(city)
 );
 
+DROP TABLE IF EXISTS employees;
 CREATE TABLE employees (
     employee_id int auto_increment,
     first_name varchar(20),
@@ -49,6 +56,7 @@ CREATE TABLE employees (
 
 );
 
+DROP TABLE IF EXISTS suppliers;
 CREATE TABLE suppliers(
     supplier_id int auto_increment,
     telephone_number varchar(15),
@@ -61,6 +69,7 @@ CREATE TABLE suppliers(
     FOREIGN KEY (city) REFERENCES city_country(city)
 );
 
+DROP TABLE IF EXISTS menu;
 CREATE TABLE menu(
     product_id int auto_increment,
     product_name varchar(600),
@@ -69,6 +78,7 @@ CREATE TABLE menu(
 
 );
 
+DROP TABLE IF EXISTS orders;
 CREATE TABLE orders(
     order_id int auto_increment,
     customer_id int,
@@ -77,6 +87,7 @@ CREATE TABLE orders(
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
 
+DROP TABLE IF EXISTS order_line;
 CREATE TABLE order_line(
     order_id int,
     product_id int,
@@ -86,6 +97,7 @@ CREATE TABLE order_line(
     FOREIGN KEY (product_id) REFERENCES menu(product_id)
 );
 
+DROP TABLE IF EXISTS stock;
 CREATE TABLE stock(
     stock_id int auto_increment,
     stock_name varchar(80),
@@ -93,6 +105,7 @@ CREATE TABLE stock(
     PRIMARY KEY (stock_id)
 );
 
+DROP TABLE IF EXISTS product;
 CREATE TABLE product(
     product_id int,
     stock_id int,
@@ -101,6 +114,7 @@ CREATE TABLE product(
     FOREIGN KEY (stock_id) REFERENCES stock(stock_id)
 );
 
+DROP TABLE IF EXISTS stock_supplier;
 CREATE TABLE stock_supplier(
     stock_id int,
     supplier_id int,
@@ -108,6 +122,7 @@ CREATE TABLE stock_supplier(
     FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id)
 );
 
+DROP TABLE IF EXISTS job;
 CREATE TABLE job(
     job_id int auto_increment,
     job_name varchar(100),
@@ -115,6 +130,7 @@ CREATE TABLE job(
     PRIMARY KEY (job_id)
 );
 
+DROP TABLE IF EXISTS positions;
 CREATE TABLE positions(
     employee_id int,
     job_id int,
@@ -123,6 +139,18 @@ CREATE TABLE positions(
     FOREIGN KEY (job_id) REFERENCES job(job_id)
 );
 
+DROP TABLE IF EXISTS users;
+create table users
+(
+    user_id    int auto_increment,
+    first_name varchar(30)  null,
+    last_name  varchar(30)  null,
+    username   varchar(20)  unique,
+    email      varchar(30)  null,
+    password   varchar(128) null,
+    role_id    int          null,
+    PRIMARY KEY (user_id)
+);
 
 
 
