@@ -23,7 +23,7 @@ CREATE TABLE time_slot(
     work_day char(10),
     start_time time,
     end_time time,
-    PRIMARY KEY (time_slot_id)
+    PRIMARY KEY (time_slot_id, work_day, start_time, end_time)
 );
 
 SHOW FULL COLUMNS FROM district_zip;
