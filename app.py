@@ -66,7 +66,7 @@ def login():
         loginForm = request.form
         username = loginForm['username']
         cur = mysql.connection.cursor()
-        queryStatement = f"SELECT * FROM user WHERE username = '{username}'"
+        queryStatement = f"SELECT * FROM users WHERE username = '{username}'"
         numRow = cur.execute(queryStatement)
         if numRow > 0:
             user = cur.fetchone()
