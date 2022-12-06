@@ -43,7 +43,7 @@ def register():
 
         queryStatement = (
             f"INSERT INTO "
-            f"user(first_name,last_name, username, email, password, role_id) "
+            f"users(first_name,last_name, username, email, password, role_id) "
             f"VALUES('{p1}', '{p2}', '{p3}', '{p4}','{hashed_pw}', 1)"
         )
         print(check_password_hash(hashed_pw, p5))
@@ -95,7 +95,6 @@ def login():
     return render_template('login.html')
 
 
-
 @app.route('/create-order/', methods=['GET', 'POST'])
 def write_blog():
     return render_template('create-order.html')
@@ -140,11 +139,10 @@ def my_blogs():
 #     return render_template('master.html')
 
 @app.route('/logout')
-def logout(): 
+def logout():
     session.clear()
     flash("You have been logged out", 'info')
     return redirect('/')
-
 
 
 if __name__ == '__main__':
