@@ -3,11 +3,12 @@
   position: relative;
   text-align: left;
   color: white;
+  /* background-color: #808080; */
 }
 .centered {
   position: absolute;
-  top: 50%;
-  left: 30%;
+  top: 20%;
+  left: 16%;
   transform: translate(-50%, -50%);
 }
 </style>
@@ -15,15 +16,64 @@
 
 {% extends 'base.html' %} {% block content %}
 <div class="container">
-    <img src={{ url_for('static',filename="cafeImage1.jpg") }} 
-        style="object-fit:fill;
-        width: 100%;
-        height: 100%;
-        "/>
+  <div class="row">
+    <div class="col-sm-6">
+    <img src={{ url_for('static',filename="poster.jpeg") }} 
+        
+        style="object-fit:cover;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 65%;
+          padding-top: 30px;
+          padding-bottom: 30px;
+          border-radius: 72px;
+          width: 90%;
+        /* height: 100%; */"/>
     <div class="centered" >
-        <h1 style="font-size: 400%;">Fredie-And-Friends Cafe</h1>
-        <h2> Best place for getting new experience.</h2>
+        <h1 style="font-size: 150%; color: #dbc7a0;">Fredie-And-Friends Cafe</h1>
+        <h4 style="font-size: 80%; color: #7f6b4b;"> Best place for getting new experience.</h2>
     </div>
+
+    <a class="btn" 
+    href="#"
+    style="  
+    position: absolute;
+    top: 81%;
+    left: 39%;
+    transform: translate(-50%, -50%);
+    color: #d7c196;
+    font-size: 14px;"
+    >
+      Order Now
+    </a>
+
+
+
+    </div>
+
+    <div class="col-sm-6" style="padding-top:32px;">
+
+      <div class="card text-center">
+
+        <div class="card-body" style="color: black;">
+          <h3 class="card-title" >WHO ARE WE</h3>
+          <hr>
+          <p class="card-text">Fredie-And-Friends Cafe is the cafe the form with two friends and Fredie.</p>
+          <p class="card-text">Our intention for open this cafe is to mkae the people enjoy their drink with care </p>
+          <p class="card-text">to have the costomer come out from their home or office to our shop.</p>
+          <p class="card-text">To change the enviroment meeting new people change the mood.</p>
+            <p class="card-text"></p> Our priority is our customers have good exsotic experience with us</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
   </div>
 
 
