@@ -31,7 +31,7 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="{{ url_for('menu') }}">Menu</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
@@ -55,11 +55,13 @@
                 >Sign Up</a
               >
             </li>
+            {% if session['login'] %}
             <li>
               <a class="dropdown-item" href="{{ url_for('logout') }}"
                 >Log Out</a
               >
             </li>
+            {% endif %}
           </ul>
         </li>
       </ul>
