@@ -152,8 +152,16 @@ create table users
     password   varchar(128) null,
     role_id    int          null,
     PRIMARY KEY (user_id)
+    FOREIGN KEY (role_id) REFERENCES roles(role_id),
 );
 
-
+DROP TABLE IF EXISTS roles;
+create table roles
+(
+    role_id int auto_increment,
+    role_description varchar(30),
+    PRIMARY KEY (role_id),
+    
+);
 
 

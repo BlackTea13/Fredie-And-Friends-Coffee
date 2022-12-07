@@ -135,3 +135,9 @@ VALUES
     (5, 3),
     (4, 4),
     (6, 4);
+
+INSERT INTO roles
+VALUES
+    (1, 'Customer'),
+    (2, 'Employees'),
+    (3, 'Owner');
