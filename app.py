@@ -98,7 +98,7 @@ def login():
 
 @app.route('/profile/<string:username>', methods=['GET'])
 def profile(username):
-    return render_template('profile.html')
+    return render_template('User/profile.html')
 
 
 @app.route('/menu/', methods=['GET'])
