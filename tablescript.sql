@@ -158,7 +158,7 @@ create table users
 DROP TABLE IF EXISTS roles;
 create table roles
 (
-    role_id int auto_increment,
+    role_id int,
     role_description varchar(30),
     PRIMARY KEY (role_id),
     

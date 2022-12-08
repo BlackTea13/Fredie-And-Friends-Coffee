@@ -93,7 +93,16 @@ def login():
         cur.close()
         return redirect('/')
     return render_template('login.html')
+    
 
+@app.route('/profile/<string:username>', methods=['GET'])
+def profile(username):
+    return render_template('profile.html')
+
+
+@app.route('/menu/', methods=['GET'])
+def menu():
+    return render_template('menu.html')
 
 @app.route('/create-order/', methods=['GET', 'POST'])
 def write_blog():
