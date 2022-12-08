@@ -28,10 +28,20 @@ def register():
         )
         cur = mysql.connection.cursor()
         cur.execute(queryStatement)
-        zip_codes_dic = cur.fetchall()
+        zip_codes = cur.fetchall()
+        
+        queryStatement = (
+            f"SELECT * "
+            f"FROM city_country;"
+        )
+        cur.execute(queryStatement)
+        city_country = cur.fetchall()
         cur.close()
-        print(zip_codes_dic)
-        return render_template('register.html', zip_codes=zip_codes_dic)
+        countries_dic = get_countries_dictionary(city_country)
+        cities = list(countries_dic.values())
+        cities = [city for sublist in cities for city in sublist]
+        return render_template('register.html', zip_codes=zip_codes, cities=cities)
+    
     elif request.method == 'POST':
         userDetails = request.form
         # Check the password and confirm password
@@ -46,28 +56,53 @@ def register():
         p5 = userDetails['email']
         p6 = userDetails['address_line']
         p7 = userDetails['zip_code']
-        p8 = userDetails['password']
+        p8 = userDetails['city']
+        p9 = userDetails['password']
         
-        print(p4)
-        print(p7)
-        hashed_pw = generate_password_hash(p8)
+
+        hashed_pw = generate_password_hash(p9)
 
         queryStatement_addUser = (
             f"INSERT INTO "
             f"users(first_name,last_name, username, email, password, role_id) "
-            f"VALUES('{p1}', '{p2}', '{p3}', '{p4}','{hashed_pw}', 1);"
+            f"VALUES('{userDetails['first_name']}',"
+            f"'{userDetails['last_name']}', '{userDetails['username']}',"
+            f"'{userDetails['email']}','{hashed_pw}', 1);"
         )
         
-        print(check_password_hash(hashed_pw, p5))
+        queryStatement_addCustomer = (
+            f"INSERT INTO "
+            f"customers(first_name,last_name,date_of_birth,email_address,address_line,zip,city) "
+            f"VALUES('{userDetails['first_name']}','{userDetails['last_name']}',"
+            f"'{userDetails['date_of_birth']}','{userDetails['email']}',"
+            f"'{userDetails['address_line']}',{userDetails['zip_code']},"
+            f"'{userDetails['city']}');"
+        )
+        
         print(queryStatement_addUser)
+        print(queryStatement_addCustomer)
         cur = mysql.connection.cursor()
         cur.execute(queryStatement_addUser)
+        cur.execute(queryStatement_addCustomer)
         mysql.connection.commit()
         cur.close()
 
         flash("Form Submitted Successfully.", "success")
         return redirect('/')
     return render_template('register.html')
+
+
+# this function only works with SQL query output
+# as the argument
+def get_countries_dictionary(input: dict[list]):
+    dic = {}
+    for item in input:
+        city, country = item
+        if item[country] not in dic:
+            dic[ item[country] ] = [item[city]]
+        elif  item[country] in dic:
+            dic[ item[country] ] += [item[city]]
+    return dic
 
 
 @app.route('/login/', methods=['GET', 'POST'])

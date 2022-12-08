@@ -59,6 +59,14 @@
       </select>
     </div>
 
+    <div class = "mb-3">
+      <label for="city" class="form-label">City</label>
+      <select class="form-select" id="city" name="city"required>
+        {% for item in cities %}
+        <option value="{{item}}">{{item}}</option>
+        {% endfor %}
+      </select>
+    </div>
 
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
