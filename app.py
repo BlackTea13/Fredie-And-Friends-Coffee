@@ -78,6 +78,7 @@ def login():
                 session['userroleid'] = str(user['role_id'])
                 session['firstName'] = user['first_name']
                 session['lastName'] = user['last_name']
+                session['userEmail'] = user['email']
                 print(session['username'] +
                       " roleid: " + session['userroleid'])
                 flash('Welcome ' + session['firstName'], 'success')
