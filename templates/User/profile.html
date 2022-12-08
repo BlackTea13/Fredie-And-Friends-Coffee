@@ -24,7 +24,7 @@
                 <p class="card-text">Last Name: {{session['lastName']}}</p>
                 <p class="card-text">User name: {{session['username']}}</p>
                 <p class="card-text">Email address: {{session['userEmail']}}</p>
-          <a href="#" class="btn btn-primary">Edit profile</a>
+          <a href="{{ url_for('editProfile', username = session['username']) }}" class="btn btn-primary">Edit profile</a>
           <a href="#" class="btn btn-primary">Change password</a>
         </div>
       </div>

@@ -100,6 +100,9 @@ def login():
 def profile(username):
     return render_template('User/profile.html')
 
+@app.route('/profile/<string:username>/edit', methods=['GET', "POST"])
+def editProfile(username):
+    return render_template('User/editProfile.html')
 
 @app.route('/menu/', methods=['GET'])
 def menu():
