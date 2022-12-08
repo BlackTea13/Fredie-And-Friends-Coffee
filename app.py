@@ -22,10 +22,18 @@ def index():
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        return render_template('register.html')
+        queryStatement = (
+            f"SELECT zip " 
+            f"FROM district_zip;"
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement)
+        zip_codes_dic = cur.fetchall()
+        cur.close()
+        print(zip_codes_dic)
+        return render_template('register.html', zip_codes=zip_codes_dic)
     elif request.method == 'POST':
         userDetails = request.form
-
         # Check the password and confirm password
         if userDetails['password'] != userDetails['confirm_password']:
             flash('Passwords do not match', 'danger')
@@ -35,21 +43,25 @@ def register():
         p2 = userDetails['last_name']
         p3 = userDetails['username']
         p4 = userDetails['email']
-        p5 = userDetails['password']
-
-        hashed_pw = generate_password_hash(p5)
+        p5 = userDetails['address_line']
+        p6 = userDetails['zip_code']
+        p7 = userDetails['password']
+        
+        print(p6)
+        hashed_pw = generate_password_hash(p7)
 
         print(p1 + "," + p2 + "," + p3 + "," + p4 + "," + p5)
 
-        queryStatement = (
+        queryStatement_addUser = (
             f"INSERT INTO "
             f"users(first_name,last_name, username, email, password, role_id) "
-            f"VALUES('{p1}', '{p2}', '{p3}', '{p4}','{hashed_pw}', 1)"
+            f"VALUES('{p1}', '{p2}', '{p3}', '{p4}','{hashed_pw}', 1);"
         )
+        
         print(check_password_hash(hashed_pw, p5))
-        print(queryStatement)
+        print(queryStatement_addUser)
         cur = mysql.connection.cursor()
-        cur.execute(queryStatement)
+        cur.execute(queryStatement_addUser)
         mysql.connection.commit()
         cur.close()
 
@@ -113,9 +125,15 @@ def write_blog():
     return render_template('create-order.html')
 
 
-@app.route('/view-orders/')
-def my_blogs():
-    return render_template('my-orders.html')
+@app.route('/view-orders/', methods=['GET'])
+def view_orders():    
+    if 'userroleid' not in session:
+        flash('You are not logged in!', 'danger')
+        return redirect('/')
+    elif 'userroleid' in session:   
+        print(session['username'])
+        queryStatement = f""
+        return render_template('Orders/view_orders.html')
 
 
 # @app.route('/view-my-order/')
