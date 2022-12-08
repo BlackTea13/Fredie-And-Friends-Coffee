@@ -42,15 +42,15 @@ def register():
         p1 = userDetails['first_name']
         p2 = userDetails['last_name']
         p3 = userDetails['username']
-        p4 = userDetails['email']
-        p5 = userDetails['address_line']
-        p6 = userDetails['zip_code']
-        p7 = userDetails['password']
+        p4 = userDetails['date_of_birth']
+        p5 = userDetails['email']
+        p6 = userDetails['address_line']
+        p7 = userDetails['zip_code']
+        p8 = userDetails['password']
         
-        print(p6)
-        hashed_pw = generate_password_hash(p7)
-
-        print(p1 + "," + p2 + "," + p3 + "," + p4 + "," + p5)
+        print(p4)
+        print(p7)
+        hashed_pw = generate_password_hash(p8)
 
         queryStatement_addUser = (
             f"INSERT INTO "
