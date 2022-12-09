@@ -23,13 +23,13 @@ def index():
 def register():
     if request.method == 'GET':
         queryStatement = (
-            f"SELECT zip " 
+            f"SELECT zip "
             f"FROM district_zip;"
         )
         cur = mysql.connection.cursor()
         cur.execute(queryStatement)
         zip_codes = cur.fetchall()
-        
+
         queryStatement = (
             f"SELECT * "
             f"FROM city_country;"
@@ -41,7 +41,7 @@ def register():
         cities = list(countries_dic.values())
         cities = [city for sublist in cities for city in sublist]
         return render_template('register.html', zip_codes=zip_codes, cities=cities)
-    
+
     elif request.method == 'POST':
         userDetails = request.form
         # Check the password and confirm password
@@ -58,7 +58,6 @@ def register():
         p7 = userDetails['zip_code']
         p8 = userDetails['city']
         p9 = userDetails['password']
-        
 
         hashed_pw = generate_password_hash(p9)
 
@@ -69,7 +68,7 @@ def register():
             f"'{userDetails['last_name']}', '{userDetails['username']}',"
             f"'{userDetails['email']}','{hashed_pw}', 1);"
         )
-        
+
         queryStatement_addCustomer = (
             f"INSERT INTO "
             f"customers(first_name,last_name,date_of_birth,email_address,address_line,zip,city) "
@@ -78,7 +77,7 @@ def register():
             f"'{userDetails['address_line']}',{userDetails['zip_code']},"
             f"'{userDetails['city']}');"
         )
-        
+
         print(queryStatement_addUser)
         print(queryStatement_addCustomer)
         cur = mysql.connection.cursor()
@@ -99,9 +98,9 @@ def get_countries_dictionary(input: dict[list]):
     for item in input:
         city, country = item
         if item[country] not in dic:
-            dic[ item[country] ] = [item[city]]
-        elif  item[country] in dic:
-            dic[ item[country] ] += [item[city]]
+            dic[item[country]] = [item[city]]
+        elif item[country] in dic:
+            dic[item[country]] += [item[city]]
     return dic
 
 
@@ -141,18 +140,21 @@ def login():
         cur.close()
         return redirect('/')
     return render_template('login.html')
-    
+
 
 def get_user_data(username) -> dict:
     return None
+
 
 @app.route('/profile/<string:username>', methods=['GET'])
 def profile(username):
     return render_template('User/profile.html')
 
+
 @app.route('/profile/<string:username>/edit', methods=['GET', "POST"])
 def editProfile(username):
     return render_template('User/editProfile.html')
+
 
 @app.route('/profile/<string:username>/change', methods=['GET', "POST"])
 def changePass(username):
@@ -163,19 +165,24 @@ def changePass(username):
 def menu():
     return render_template('menu.html')
 
+
 @app.route('/create-order/', methods=['GET', 'POST'])
 def write_blog():
     return render_template('create-order.html')
 
+
 @app.route('/view-orders/', methods=['GET'])
-def view_orders():    
+def view_orders():
+    print(session['userroleid'])
     if 'userroleid' not in session:
         flash('You are not logged in!', 'danger')
         return redirect('/')
-    elif 'userroleid' in session:   
+    elif session['userroleid'] == '3':
         print(session['username'])
-        return render_template('Orders/view_orders.html')
-
+        return render_template('Orders/view_orders_owner.html')
+    elif session['userroleid'] == '1':
+        return render_template('Orders/view_orders_customer.html')
+    return redirect('/')
 
 # @app.route('/view-my-order/')
 # def my_blogs():
