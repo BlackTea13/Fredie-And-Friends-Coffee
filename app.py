@@ -212,9 +212,23 @@ def get_time_slot():
     cur.close()
     return timeslot
     
-@app.route('/menu/', methods=['GET'])
+@app.route('/menu/', methods=['GET', 'POST'])
 def menu():
-    return render_template('menu.html')
+    menu = getAllMenu()
+    return render_template('menu.html', menu=menu)
+
+
+def getAllMenu():
+    cur = mysql.connection.cursor()
+    queryStatement = (
+    f"Select product_name, price_per_unit "
+    f"FROM menu; ")
+    cur.execute(queryStatement)
+    menu = cur.fetchall()
+    print(menu)
+    cur.close()
+    return menu
+
 
 
 @app.route('/create-order/', methods=['GET', 'POST'])
