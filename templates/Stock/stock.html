@@ -1,32 +1,38 @@
 {% extends 'base.html' %} {% block content %}
-    <section>
-        <div class="container py-5 h-50">
-            <div class="row h-100">
-                <div class="col-auto">
-                    <div class="table border-box-sizing">
-                        <h1 class="text-center">Stock</h1>
-                        <table class="table-bordered table-striped center">
-                            <thead class="thead-dark">
-                            <tr class="text-center">
-                                <th scope="col">Stock Id</th>
-                                <th scope="col">Stock Name</th>
-                                <th scope="col">Stock Quantity</th>
-                            </tr>
-                            </thead>
-                            {% for st in stock %}
-                                <tbody>
-                                <tr>
-                                    <td>{{ st['stock_id'] }}</td>
-                                    <td>{{ st['stock_name'] }}</td>
-                                    <td>{{ st['units'] }}</td>
-                                </tr>
-                                </tbody>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
+    <div class="row my-5 ">
+        <div class="card text-center"
+             style="width: 900px; margin: 40px; margin-left: auto; margin-right: auto; padding: 0px;">
+            <div class="card-header">
+                <h2>STOCK</h2>
+            </div>
+            <div class="card-body">
+                <table class="table my-5">
+                    <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th scope="col">Stock Id</th>
+                        <th scope="col">Stock Name</th>
+                        <th scope="col">Stock Quantity</th>
+                    </tr>
+                    </thead>
+                    <h4 class="card-title">Current Stock</h4>
+                    {% for st in stock %}
+                        <tbody>
+                        <tr>
+                            <td>{{ st['stock_id'] }}</td>
+                            <td>{{ st['stock_name'] }}</td>
+                            <td>{{ st['units'] }}</td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+                <a href="#" class="btn btn-primary">Edit Stock</a>
+            </div>
+
+            <div class="card-footer text-muted">
+                Fredie-And-Friends Cafe
             </div>
         </div>
-    </section>
-    </body>
+    </div>
+
 {% endblock %}
+
