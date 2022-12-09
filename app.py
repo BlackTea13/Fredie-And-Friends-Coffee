@@ -184,6 +184,33 @@ def view_orders():
         return render_template('Orders/view_orders_customer.html')
     return redirect('/')
 
+
+def get_all_orders():
+    cur = mysql.connection.cursor()
+    queryStatement = f""
+    f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
+    f"FROM orders join customers c on c.customer_id = orders.customer_id "
+    f"join order_line ol on orders.order_id = ol.order_id "
+    f"join menu m on ol.product_id = m.product_id; "
+    cur.execute(queryStatement)
+    all_orders = cur.fetchall()
+    cur.close()
+    return all_orders
+
+
+def get_customer_order(email):
+    cur = mysql.connection.cursor()
+    queryStatement = f""
+    f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
+    f"FROM orders join customers c on c.customer_id = orders.customer_id "
+    f"join order_line ol on orders.order_id = ol.order_id "
+    f"join menu m on ol.product_id = m.product_id; "
+    f"WHERE email_address = '{email}'"
+    cur.execute(queryStatement)
+    customer_orders = cur.fetchall()
+    cur.close()
+    return customer_orders
+
 # @app.route('/view-my-order/')
 # def my_blogs():
 #     return render_template('my-orders.html')
