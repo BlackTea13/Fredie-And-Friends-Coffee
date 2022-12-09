@@ -30,10 +30,13 @@
             <div class="mx-n5 px-5 py-4 mb-2" style="background-color: #f2f2f2">
               {% for item in orders[order]%}
               <div class="row">
-                <div class="col-md-8 col-lg-9">
+                <div class="col">
                   <p>{{ item['product_name']}}</p>
                 </div>
-                <div class="col-md-4 col-lg-3">
+                <div class="col">
+                  <p>{{ item['quantity']}}</p>
+                </div>
+                <div class="col md-auto">
                   <p>{{ item['price_per_unit']}}</p>
                 </div>
               </div>

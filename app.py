@@ -224,7 +224,7 @@ def cost_for_each_order(dict):
     for order_id in dict:
         cost = 0
         for item in dict[order_id]:
-            cost += item['price_per_unit']
+            cost += item['price_per_unit'] * item['quantity']
         item['total_cost'] = cost
 
 
