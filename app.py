@@ -44,6 +44,8 @@ def register():
 
     elif request.method == 'POST':
         userDetails = request.form
+
+        
         # Check the password and confirm password
         if userDetails['password'] != userDetails['confirm_password']:
             flash('Passwords do not match', 'danger')
@@ -83,6 +85,39 @@ def register():
     return render_template('register.html')
 
 
+def is_username_unique(username):
+    cur = mysql.connection.cursor()
+    queryStatement = (
+        f"SELECT username "
+        f"FROM users;"
+    )
+    cur.execute(queryStatement)
+    usernames = cur.fetchall()
+    cur.close()
+    usernames = list(usernames.values())
+    if username in usernames:
+        return False
+    return True
+
+def is_email_unique(email):
+    tables_to_query = ['users', 'customers', 'employees', 'suppliers']
+    
+    emails = []
+    cur = mysql.connection.cursor()
+    for table in tables_to_query:
+        queryStatement = (
+            f"SELECT email_address "
+            f"FROM {table};"
+        )
+        cur.execute(queryStatement)
+        emails.extend(list(cur.fetchall().values))
+    cur.close()
+    if email in emails:
+        return False
+    return True
+        
+
+
 # this function only works with SQL query output
 # as the argument
 def get_countries_dictionary(input: dict[list]):
@@ -117,7 +152,7 @@ def login():
                 session['userroleid'] = str(user['role_id'])
                 session['firstName'] = user['first_name']
                 session['lastName'] = user['last_name']
-                session['userEmail'] = user['email']
+                session['userEmail'] = user['email_address']
                 print(session['username'] +
                       " roleid: " + session['userroleid'])
                 flash('Welcome ' + session['firstName'], 'success')
