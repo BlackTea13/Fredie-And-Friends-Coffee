@@ -64,7 +64,9 @@
             </p>
 
             {% if orders[order][0]['order_status'] == 'incomplete' %}
-            <button> Complete Order </button>
+            <form method="POST">
+              <button type="submit" class="form-control" name="order" id="order" value={{order}}>Complete Order</button>
+            </form>
             {% endif %}
           </div>
         </div>

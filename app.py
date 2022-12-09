@@ -222,21 +222,35 @@ def write_blog():
     return render_template('create-order.html')
 
 
-@app.route('/view-orders/', methods=['GET'])
+@app.route('/view-orders/', methods=['GET', 'POST'])
 def view_orders():
-    print(session['userroleid'])
-    if 'userroleid' not in session:
-        flash('You are not logged in!', 'danger')
-        return redirect('/')
-    elif session['userroleid'] == '3' or session['userroleid'] == '2':
-        orders = orders_by_order_id(get_all_orders())
-        cost_for_each_order(orders)
-        return render_template('Orders/view_orders_owner.html', orders=orders)
-    elif session['userroleid'] == '1':
-        orders = orders_by_order_id(get_customer_order(session['userEmail']))
-        cost_for_each_order(orders)
-        return render_template('Orders/view_orders_customer.html', orders=orders)
-    return redirect('/')
+    if request.method == 'GET':
+        if 'userroleid' not in session:
+            flash('You are not logged in!', 'danger')
+            return redirect('/')
+        elif session['userroleid'] == '3' or session['userroleid'] == '2':
+            orders = orders_by_order_id(get_all_orders())
+            cost_for_each_order(orders)
+            return render_template('Orders/view_orders_owner.html', orders=orders)
+        elif session['userroleid'] == '1':
+            orders = orders_by_order_id(get_customer_order(session['userEmail']))
+            cost_for_each_order(orders)
+            return render_template('Orders/view_orders_customer.html', orders=orders)
+    elif request.method == 'POST':
+        order_id_completed = request.form['order']
+        queryStatement = (
+            f"UPDATE orders "
+            f"SET order_status = 'complete' "
+            f"WHERE order_id = %s;"
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement, (order_id_completed,))
+        mysql.connection.commit()
+        cur.close()
+        if 'userroleid' not in session:
+            flash('You are not logged in!', 'danger')
+            return redirect('/')
+    return redirect('/view-orders')
 
 
 def get_all_orders():
