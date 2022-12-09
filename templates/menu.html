@@ -1,3 +1,60 @@
 {% extends 'base.html' %} {% block content %}
+<div class="row my-5 ">
+<div class="card text-center" style="width: 900px; margin: 40px; margin-left: auto; margin-right: auto; padding: 0px;">
+    <div class="card-header">
+      <h2>MENU</h2>
+    </div>
+    <div class="card-body">
+      <table class="table my-5">    
+        <thead>
+            <tr>
+              <th scope="col" style="width: 360px;">Product Name</th>
+              <th scope="col" style="width: 360px;">Price Per Unit</th>
+              <th scope="col" style="width: 360px;">Amoung</th>
+  
+            </tr>
+          </thead>    
+      <h4 class="card-title">Coffee</h4>
+      {% for i in menu %} 
+      <!-- <p class="card-text">
+        {{i['product_name']}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{i['price_per_unit']}}
+      </p> -->
+
+
+
+
+
+
+        <tbody>
+           
+          <tr>
+            <td>{{i['product_name']}}</td>
+            <td>{{i['price_per_unit']}}</td>
+            <td>0</td>
+
+          </tr>
+        </tbody>
+      {% endfor %}
+
+      </table>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+
+    <div class="card-footer text-muted">
+        Fredie-And-Friends Cafe
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}
+
+<script>
+export default {
+    data () {
+        return {
+            num: 1
+        }
+    }
+}
+</script>
