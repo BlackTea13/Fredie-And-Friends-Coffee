@@ -154,6 +154,11 @@ def profile(username):
 def editProfile(username):
     return render_template('User/editProfile.html')
 
+@app.route('/profile/<string:username>/change', methods=['GET', "POST"])
+def changePass(username):
+    return render_template('User/changePass.html')
+
+
 @app.route('/menu/', methods=['GET'])
 def menu():
     return render_template('menu.html')
