@@ -112,13 +112,14 @@ def login():
     elif request.method == 'POST':
         loginForm = request.form
         username = loginForm['username']
+        user_data = get_user_data(username)
         cur = mysql.connection.cursor()
-        queryStatement = f"SELECT * FROM users WHERE username = '{username}'"
-        numRow = cur.execute(queryStatement)
-        if numRow > 0:
+        queryStatement_user = f"SELECT * FROM users WHERE username = '{username}'"
+        numRow_user = cur.execute(queryStatement_user)
+
+        if numRow_user > 0:
             user = cur.fetchone()
             if check_password_hash(user['password'], loginForm['password']):
-
                 # Record session information
                 session['login'] = True
                 session['username'] = user['username']
@@ -129,7 +130,6 @@ def login():
                 print(session['username'] +
                       " roleid: " + session['userroleid'])
                 flash('Welcome ' + session['firstName'], 'success')
-                #flash("Log In successful", 'success')
                 return redirect('/')
             else:
                 cur.close()
@@ -142,6 +142,9 @@ def login():
         return redirect('/')
     return render_template('login.html')
     
+
+def get_user_data(username) -> dict:
+    return None
 
 @app.route('/profile/<string:username>', methods=['GET'])
 def profile(username):
@@ -159,7 +162,6 @@ def menu():
 def write_blog():
     return render_template('create-order.html')
 
-
 @app.route('/view-orders/', methods=['GET'])
 def view_orders():    
     if 'userroleid' not in session:
@@ -167,7 +169,6 @@ def view_orders():
         return redirect('/')
     elif 'userroleid' in session:   
         print(session['username'])
-        queryStatement = f""
         return render_template('Orders/view_orders.html')
 
 

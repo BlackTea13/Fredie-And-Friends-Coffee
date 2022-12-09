@@ -1,13 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-    {% if session['login'] %}
+    {% if not session['login'] %}
         <div>not logged in</div>
-        huh
     {% elif session['userroleid'] == '1' %}
         <div>all MY orders</div>
     {% elif session['userroleid'] == '2' %}
         <div>all CUSTOMER orders</div>
     {% elif session['userroleid'] == '3' %}
         <div>all ORDERS</div>
-
     {% endif %}
 {% endblock %}
