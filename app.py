@@ -212,9 +212,23 @@ def get_time_slot():
     cur.close()
     return timeslot
     
-@app.route('/menu/', methods=['GET'])
+@app.route('/menu/', methods=['GET', 'POST'])
 def menu():
-    return render_template('menu.html')
+    menu = getAllMenu()
+    return render_template('menu.html', menu=menu)
+
+
+def getAllMenu():
+    cur = mysql.connection.cursor()
+    queryStatement = (
+    f"Select product_name, price_per_unit "
+    f"FROM menu; ")
+    cur.execute(queryStatement)
+    menu = cur.fetchall()
+    print(menu)
+    cur.close()
+    return menu
+
 
 
 @app.route('/create-order/', methods=['GET', 'POST'])
@@ -317,6 +331,23 @@ def logout():
     session.clear()
     flash("You have been logged out", 'info')
     return redirect('/')
+
+@app.route('/stock/', methods=['GET'])
+def stock():
+    if session['userroleid'] == '2' or session['userroleid'] == '3':
+        stock = get_stock()
+        return render_template('stock.html', stock=stock)
+    flash("You don't work here!", 'danger')
+    return redirect('/')
+
+def get_stock():
+    cur = mysql.connection.cursor()
+    queryStatement = (
+        f"SELECT * FROM stock;")
+    cur.execute(queryStatement)
+    current_stock = cur.fetchall()
+    cur.close()
+    return current_stock
 
 
 if __name__ == '__main__':
