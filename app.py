@@ -127,8 +127,6 @@ def is_email_unique(email):
         return False
     return True
         
-
-
 # this function only works with SQL query output
 # as the argument
 def get_countries_dictionary(input: dict[list]):
@@ -207,16 +205,10 @@ def get_time_slot():
     cur = mysql.connection.cursor()
     queryStatement = (
     f"SELECT first_name, last_name, work_day, start_time, end_time "
-    f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id; ")
-    if (session['userroleid'] == 2): 
-        queryStatement = (
-        f"SELECT first_name, last_name, work_day, start_time, end_time "
-        f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
-        f"WHERE email_address = '{session['userEmail'] }'; ")
-    print(queryStatement)
+    f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
+    f"WHERE email_address = '{session['userEmail'] }'; ")
     cur.execute(queryStatement)
     timeslot = cur.fetchall()
-    print(timeslot)
     cur.close()
     return timeslot
     
@@ -236,14 +228,13 @@ def view_orders():
     if 'userroleid' not in session:
         flash('You are not logged in!', 'danger')
         return redirect('/')
-    elif session['userroleid'] == '3':
-        print(session['username'])
+    elif session['userroleid'] == '3' or session['userroleid'] == '2':
         orders = orders_by_order_id(get_all_orders())
         cost_for_each_order(orders)
-        print(orders)
         return render_template('Orders/view_orders_owner.html', orders=orders)
     elif session['userroleid'] == '1':
-        orders = orders_by_order_id(get_customer_order(session['email']))
+        orders = orders_by_order_id(get_customer_order(session['userEmail']))
+        cost_for_each_order(orders)
         return render_template('Orders/view_orders_customer.html', orders=orders)
     return redirect('/')
 
@@ -287,32 +278,12 @@ def get_customer_order(email):
         f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
         f"FROM orders join customers c on c.customer_id = orders.customer_id "
         f"join order_line ol on orders.order_id = ol.order_id "
-        f"join menu m on ol.product_id = m.product_id; "
-        f"WHERE email_address = '{email}'")
+        f"join menu m on ol.product_id = m.product_id "
+        f"WHERE email_address = '{email}';")
     cur.execute(queryStatement)
     customer_orders = cur.fetchall()
     cur.close()
     return customer_orders
-
-# @app.route('/view-my-order/')
-# def my_blogs():
-#     return render_template('my-orders.html')
-
-
-# @app.route('/view-orders/')
-# def my_blogs():
-#     return render_template('view-orders.html')
-
-
-# @app.route('/view-orders/')
-# def my_blogs():
-#     return render_template('my-orders.html')
-
-
-# @app.route('/account/')
-# def my_blogs():
-#     return render_template('account.html')
-
 
 # @app.route('/employee/')
 # def my_blogs():
