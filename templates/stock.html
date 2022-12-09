@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+    <section>
+        <div class="container py-5 h-50">
+            <div class="row h-100">
+                <div class="col-auto">
+                    <div class="table border-box-sizing">
+                        <h1 class="text-center">Stock</h1>
+                        <table class="table-bordered table-striped center">
+                            <thead class="thead-dark">
+                            <tr class="text-center">
+                                <th scope="col">Stock Id</th>
+                                <th scope="col">Stock Name</th>
+                                <th scope="col">Stock Quantity</th>
+                            </tr>
+                            </thead>
+                            {% for st in stock %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ st['stock_id'] }}</td>
+                                    <td>{{ st['stock_name'] }}</td>
+                                    <td>{{ st['units'] }}</td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+{% endblock %}
