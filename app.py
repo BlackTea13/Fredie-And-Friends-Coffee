@@ -49,14 +49,6 @@ def register():
             flash('Passwords do not match', 'danger')
             return render_template('register.html')
 
-        p1 = userDetails['first_name']
-        p2 = userDetails['last_name']
-        p3 = userDetails['username']
-        p4 = userDetails['date_of_birth']
-        p5 = userDetails['email']
-        p6 = userDetails['address_line']
-        p7 = userDetails['zip_code']
-        p8 = userDetails['city']
         p9 = userDetails['password']
 
         hashed_pw = generate_password_hash(p9)
@@ -160,7 +152,21 @@ def editProfile(username):
 def changePass(username):
     return render_template('User/changePass.html')
 
+@app.route('/employee/<int:name>', methods=['GET'])
+def timeslot(name):
+    time_slot_data = get_time_slot()
+    return render_template('/Employee/timeslotPage.html', time_slot_data)
 
+def get_time_slot():
+    cur = mysql.connection.cursor()
+    queryStatement = (
+    f"SELECT first_name, last_name, work_day, start_time, end_time"
+    f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id"
+    f"WHERE email_address = {session['userEmail'] };")
+    cur.execute(queryStatement)
+    timeslot = cur.fetchall()
+    cur.close()
+    return timeslot
 @app.route('/menu/', methods=['GET'])
 def menu():
     return render_template('menu.html')
