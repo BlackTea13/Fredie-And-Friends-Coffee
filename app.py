@@ -179,9 +179,11 @@ def view_orders():
         return redirect('/')
     elif session['userroleid'] == '3':
         print(session['username'])
-        return render_template('Orders/view_orders_owner.html')
+        orders = get_all_orders()
+        return render_template('Orders/view_orders_owner.html', orders=orders)
     elif session['userroleid'] == '1':
-        return render_template('Orders/view_orders_customer.html')
+        orders = get_customer_order(session['email'])
+        return render_template('Orders/view_orders_customer.html', orders=orders)
     return redirect('/')
 
 
