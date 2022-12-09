@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mysqldb import MySQL
+from datetime import datetime
 import yaml
 
 app = Flask(__name__)
@@ -40,12 +41,17 @@ def register():
         countries_dic = get_countries_dictionary(city_country)
         cities = list(countries_dic.values())
         cities = [city for sublist in cities for city in sublist]
-        return render_template('register.html', zip_codes=zip_codes, cities=cities)
+        return render_template('register.html', zip_codes=zip_codes, cities=cities, today=datetime.date(datetime.now()))
 
     elif request.method == 'POST':
         userDetails = request.form
 
-        
+        if not is_username_unique(userDetails['username']):
+            flash("username not unique", "danger")
+            return redirect('/register')
+        if not is_email_unique(userDetails['email']):
+            flash("email is not unique", "danger")
+            return redirect('/register')
         # Check the password and confirm password
         if userDetails['password'] != userDetails['confirm_password']:
             flash('Passwords do not match', 'danger')
@@ -57,7 +63,7 @@ def register():
 
         queryStatement_addUser = (
             f"INSERT INTO "
-            f"users(first_name,last_name, username, email, password, role_id) "
+            f"users(first_name,last_name, username, email_address, password, role_id) "
             f"VALUES('{userDetails['first_name']}',"
             f"'{userDetails['last_name']}', '{userDetails['username']}',"
             f"'{userDetails['email']}','{hashed_pw}', 1);"
@@ -91,10 +97,13 @@ def is_username_unique(username):
         f"SELECT username "
         f"FROM users;"
     )
-    cur.execute(queryStatement)
+    numRow = cur.execute(queryStatement)
+    print(numRow)
+    if numRow <= 0:
+        return True
     usernames = cur.fetchall()
     cur.close()
-    usernames = list(usernames.values())
+    usernames = [u['username'] for u in usernames]
     if username in usernames:
         return False
     return True
@@ -109,8 +118,10 @@ def is_email_unique(email):
             f"SELECT email_address "
             f"FROM {table};"
         )
-        cur.execute(queryStatement)
-        emails.extend(list(cur.fetchall().values))
+        numRow = cur.execute(queryStatement)
+        if numRow <= 0:
+            continue
+        emails.extend([u['email_address'] for u in cur.fetchall()])
     cur.close()
     if email in emails:
         return False
