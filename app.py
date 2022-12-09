@@ -207,10 +207,16 @@ def get_time_slot():
     cur = mysql.connection.cursor()
     queryStatement = (
     f"SELECT first_name, last_name, work_day, start_time, end_time "
-    f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
-    f"WHERE email_address = '{session['userEmail'] }'; ")
+    f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id; ")
+    if (session['userroleid'] == 2): 
+        queryStatement = (
+        f"SELECT first_name, last_name, work_day, start_time, end_time "
+        f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
+        f"WHERE email_address = '{session['userEmail'] }'; ")
+    print(queryStatement)
     cur.execute(queryStatement)
     timeslot = cur.fetchall()
+    print(timeslot)
     cur.close()
     return timeslot
     

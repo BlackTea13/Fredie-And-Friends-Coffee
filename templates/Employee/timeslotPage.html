@@ -3,38 +3,23 @@
 
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
+        <th scope="col" style="padding-left: 30px;">Name</th>
         <th scope="col">Work Day</th>
         <th scope="col">Start Time</th>
         <th scope="col">End Time</th>
       </tr>
     </thead>
     <tbody>
-      {% for i in time_slot_data %}
+      
+      {% for i in time_slot_data %} 
       <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Monday</td>
-        <td>00:00</td>
-        <td>24:00</td>
+        <td style="padding-left: 30px; ">{{i['first_name']}} {{i['last_name']}}</td>
+        <td>{{i['work_day']}}</td>
+        <td >{{i['start_time']}}</td>
+        <td>{{i['end_time']}}</td>
       </tr>
       {% endfor %}
-      <tr>
-        <th scope="row">2</th>
-        <td>Mark</td>
-        <td>Monday</td>
-        <td>00:00</td>
-        <td>24:00</td>
-      </tr>
 
-      <tr>
-        <th scope="row">3</th>
-        <td>Mark</td>
-        <td>Monday</td>
-        <td>00:00</td>
-        <td>24:00</td>
-      </tr>
       
 
 
