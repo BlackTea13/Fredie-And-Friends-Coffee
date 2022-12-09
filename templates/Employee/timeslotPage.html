@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+<table class="table my-5">
+
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Work Day</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in time_slot_data %}
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Monday</td>
+        <td>00:00</td>
+        <td>24:00</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <th scope="row">2</th>
+        <td>Mark</td>
+        <td>Monday</td>
+        <td>00:00</td>
+        <td>24:00</td>
+      </tr>
+
+      <tr>
+        <th scope="row">3</th>
+        <td>Mark</td>
+        <td>Monday</td>
+        <td>00:00</td>
+        <td>24:00</td>
+      </tr>
+      
+
+
+
+      <!-- <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr> -->
+
+    </tbody>
+  </table>
+{% endblock %}
