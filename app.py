@@ -322,7 +322,7 @@ def logout():
 def stock():
     if session['userroleid'] == '2' or session['userroleid'] == '3':
         stock = get_stock()
-        return render_template('stock.html', stock=stock)
+        return render_template('Stock/stock.html', stock=stock)
     flash("You don't work here!", 'danger')
     return redirect('/')
 
