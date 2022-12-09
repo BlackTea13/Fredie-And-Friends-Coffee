@@ -180,6 +180,7 @@ def view_orders():
     elif session['userroleid'] == '3':
         print(session['username'])
         orders = get_all_orders()
+        print(orders)
         return render_template('Orders/view_orders_owner.html', orders=orders)
     elif session['userroleid'] == '1':
         orders = get_customer_order(session['email'])
@@ -189,11 +190,11 @@ def view_orders():
 
 def get_all_orders():
     cur = mysql.connection.cursor()
-    queryStatement = f""
-    f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
-    f"FROM orders join customers c on c.customer_id = orders.customer_id "
-    f"join order_line ol on orders.order_id = ol.order_id "
-    f"join menu m on ol.product_id = m.product_id; "
+    queryStatement = (
+        f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
+        f"FROM orders join customers c on c.customer_id = orders.customer_id "
+        f"join order_line ol on orders.order_id = ol.order_id "
+        f"join menu m on ol.product_id = m.product_id; ")
     cur.execute(queryStatement)
     all_orders = cur.fetchall()
     cur.close()
@@ -202,12 +203,12 @@ def get_all_orders():
 
 def get_customer_order(email):
     cur = mysql.connection.cursor()
-    queryStatement = f""
-    f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
-    f"FROM orders join customers c on c.customer_id = orders.customer_id "
-    f"join order_line ol on orders.order_id = ol.order_id "
-    f"join menu m on ol.product_id = m.product_id; "
-    f"WHERE email_address = '{email}'"
+    queryStatement = (
+        f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
+        f"FROM orders join customers c on c.customer_id = orders.customer_id "
+        f"join order_line ol on orders.order_id = ol.order_id "
+        f"join menu m on ol.product_id = m.product_id; "
+        f"WHERE email_address = '{email}'")
     cur.execute(queryStatement)
     customer_orders = cur.fetchall()
     cur.close()
