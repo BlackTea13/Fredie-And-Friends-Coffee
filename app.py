@@ -179,11 +179,12 @@ def view_orders():
         return redirect('/')
     elif session['userroleid'] == '3':
         print(session['username'])
-        orders = get_all_orders()
+        orders = orders_by_order_id(get_all_orders())
+        cost_for_each_order(orders)
         print(orders)
         return render_template('Orders/view_orders_owner.html', orders=orders)
     elif session['userroleid'] == '1':
-        orders = get_customer_order(session['email'])
+        orders = orders_by_order_id(get_customer_order(session['email']))
         return render_template('Orders/view_orders_customer.html', orders=orders)
     return redirect('/')
 
@@ -199,6 +200,26 @@ def get_all_orders():
     all_orders = cur.fetchall()
     cur.close()
     return all_orders
+
+
+# this function will process SQL Query output into
+# dictionary by order_id
+def orders_by_order_id(rows):
+    orders = {}
+    for row in rows:
+        if row['order_id'] in orders:
+            orders[row['order_id']] += [row]
+        elif row['order_id'] not in orders:
+            orders[row['order_id']] = [row]
+    return orders
+
+
+def cost_for_each_order(dict):
+    for order_id in dict:
+        cost = 0
+        for item in dict[order_id]:
+            cost += item['price_per_unit']
+        item['total_cost'] = cost
 
 
 def get_customer_order(email):
