@@ -5,35 +5,39 @@
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{ url_for('static',filename="user.png") }}"><span class="font-weight-bold">{{session['username']}} </span><span class="text-black-50">{{session['userEmail']}} </span><span> </span></div>
         </div>
+        
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
+                <form method="POST">
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <label class="labels">Name</label>
-                        <input type="text" name="first_name" class="form-control" placeholder="first name" value="{{session['firstName']}}">
+                        <input type="text" name="first_name" class="form-control" required placeholder="first name" value="{{session['firstName']}}">
                     </div>
                     <div class="col-md-6">
                         <label class="labels">Surname</label>
-                        <input type="text" class="form-control" value="{{session['lastName']}}" placeholder="last name">
+                        <input type="text" name="last_name" class="form-control" required value="{{session['lastName']}}" placeholder="last name">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12">
                         <label class="labels">Username</label>
-                        <input type="text" class="form-control" placeholder="username" value="{{session['username']}}">
+                        <input type="text" name="username" class="form-control" required placeholder="username" value="{{session['username']}}">
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Email</label>
-                        <input type="text" class="form-control" placeholder="email" value="{{session['userEmail']}}">
+                        <input type="text" name="email" class="form-control" required placeholder="email" value="{{session['userEmail']}}">
                     </div>
-
+                    {% if session['userroleid']|int != 3 %}
                     <div class="col-md-12">
                         <label class="labels">Address Line</label>
-                        <textarea class="form-control" placeholder="enter address line 1" value=""></textarea>
+                        <textarea class="form-control" name="address_line" required placeholder="enter address line" value=""></textarea>
                     </div>
+                    {% endif %}
+
 
                 </div>
                 <div class="row mt-3">
@@ -49,6 +53,8 @@
                 <div class="mt-5 text-center">
                     <button class="btn btn-primary profile-button" type="button">Save Profile</button>
                 </div>
+
+                </form>
             </div>
         </div>
 
