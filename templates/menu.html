@@ -5,6 +5,7 @@
       <h2>MENU</h2>
     </div>
     <div class="card-body">
+      <form method="POST">
       <table class="table my-5">    
         <thead>
             <tr>
@@ -15,23 +16,21 @@
             </tr>
           </thead>    
       <h4 class="card-title">Coffee</h4>
-      {% for i in menu %} 
-      <!-- <p class="card-text">
-        {{i['product_name']}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{i['price_per_unit']}}
-      </p> -->
-        <tbody>
-           
-          <tr>
-            <td>{{i['product_name']}}</td>
-            <td>{{i['price_per_unit']}}</td>
-            <td>0</td>
+        {% for i in menu %} 
+          <tbody>
+            <tr>
+              <td>{{i['product_name']}}</td>
+              <td>{{i['price_per_unit']}}</td>
+              <td>
+                  <input type="number" min="0" name="{{i['product_name']}}" class="form-control">
+              </td>
+            </tr>
+          </tbody>
+        {% endfor %}
 
-          </tr>
-        </tbody>
-      {% endfor %}
-
-      </table>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+        </table>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
 
     <div class="card-footer text-muted">
