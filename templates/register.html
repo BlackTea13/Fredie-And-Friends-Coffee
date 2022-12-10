@@ -11,20 +11,21 @@
         class="form-control"
         id="first_name"
         name="first_name"
+        required
       />
     </div>
     <div class="mb-3">
       <label for="last_name" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="last_name" name="last_name" />
+      <input type="text" class="form-control" id="last_name" required name="last_name" />
     </div>
     <div class="mb-3">
       <label for="username" class="form-label">User name</label>
-      <input type="text" class="form-control" id="username" name="username" />
+      <input type="text" class="form-control" id="username" required name="username" />
     </div>
 
     <div class="mb-3">
       <label for="date_of_birth" class="form-label">Date of birth</label>
-        <input id="date_of_birth" class="form-control" type="date" name="date_of_birth"  value="{{today}}" />
+        <input id="date_of_birth" class="form-control" type="date" name="date_of_birth" required value="{{today}}" />
         <span id="date_of_birthSelected"></span>
     </div>
 
@@ -35,6 +36,7 @@
         class="form-control"
         id="email"
         name="email"
+        required
         aria-describedby="emailHelp"
       />
       <div id="emailHelp" class="form-text">
@@ -47,6 +49,7 @@
         type="text"
         class="form-control"
         name="address_line"
+        required
       </input>
     </div>
 
@@ -61,7 +64,7 @@
 
     <div class = "mb-3">
       <label for="city" class="form-label">City</label>
-      <select class="form-select" id="city" name="city"required>
+      <select class="form-select" id="city" name="city" required>
         {% for item in cities %}
         <option value="{{item}}">{{item}}</option>
         {% endfor %}
@@ -75,6 +78,7 @@
         class="form-control"
         id="password"
         name="password"
+        required
       />
     </div>
     <div class="mb-3">
@@ -84,6 +88,7 @@
         class="form-control"
         id="confirm_password"
         name="confirm_password"
+        required
       />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
