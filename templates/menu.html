@@ -9,6 +9,7 @@
       <table class="table my-5">    
         <thead>
             <tr>
+                <th scope="col" style="width: 360px;"></th>
               <th scope="col" style="width: 360px;">Product Name</th>
               <th scope="col" style="width: 360px;">Price Per Unit</th>
               <th scope="col" style="width: 360px;">Amount</th>
@@ -19,6 +20,19 @@
         {% for i in menu %} 
           <tbody>
             <tr>
+                {% if i['product_name'] == 'espresso' %}
+                <td><img src={{ url_for('static',filename="espresso.png") }} alt="" width="100" height="100"></td>
+                {% elif i['product_name'] == 'cappuccino' %}
+                <td><img src={{ url_for('static',filename="cappuccino.png") }} alt="" width="100" height="100"></td>
+                {% elif i['product_name'] == 'latte' %}
+                <td><img src={{ url_for('static',filename="latte.png") }} alt="" width="100" height="100"></td>
+                {% elif i['product_name'] == 'hot chocolate' %}
+                <td><img src={{ url_for('static',filename="hotchoco.png") }} alt="" width="100" height="100"></td>
+               {% elif i['product_name'] == 'iced chocolate' %}
+                <td><img src={{ url_for('static',filename="iced.png") }} alt="" width="100" height="100"></td>
+               {% elif i['product_name'] == 'caramel macchiato' %}
+                <td><img src={{ url_for('static',filename="machi.png") }} alt="" width="100" height="100"></td>
+                {% endif %}
               <td>{{i['product_name']}}</td>
               <td>{{i['price_per_unit']}}</td>
               <td>
