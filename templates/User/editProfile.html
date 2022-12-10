@@ -29,31 +29,38 @@
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Email</label>
-                        <input type="text" name="email" class="form-control" required placeholder="email" value="{{session['userEmail']}}">
+                        <input type="text" name="email_address" class="form-control" required placeholder="email" value="{{session['userEmail']}}">
                     </div>
                     {% if session['userroleid']|int != 3 %}
                     <div class="col-md-12">
                         <label class="labels">Address Line</label>
-                        <textarea class="form-control" name="address_line" required placeholder="enter address line" value=""></textarea>
+                        <textarea class="form-control" name="address_line" required placeholder="enter address line">{{address_line}}</textarea>
                     </div>
-                    {% endif %}
-
-
+                    
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label class="labels">Zip</label>
-                        <input type="text" class="form-control" placeholder="zip" value="">
+                        <label for="zip_code" class="form-label">Zip Code</label>
+                        <select class="form-select" id="zip_code" name="zip_code"required>
+                          {% for item in zip_codes%}
+                          <option value="{{item['zip']}}">{{item['zip']}}</option>
+                          {% endfor %}
+                        </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="labels">City</label>
-                        <input type="text" class="form-control" value="" placeholder="city">
+                        <label for="city" class="form-label">City</label>
+                        <select class="form-select" id="city" name="city"required>
+                          {% for item in cities %}
+                          <option value="{{item}}">{{item}}</option>
+                          {% endfor %}
+                        </select>
                     </div>
                 </div>
-                <div class="mt-5 text-center">
-                    <button class="btn btn-primary profile-button" type="button">Save Profile</button>
-                </div>
 
+                {% endif %}
+                <div class="mt-5 text-center">
+                    <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                </div>
                 </form>
             </div>
         </div>

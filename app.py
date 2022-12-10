@@ -184,11 +184,103 @@ def profile(username):
 
 @app.route('/profile/<string:username>/edit', methods=['GET', "POST"])
 def editProfile(username):
+    # if (session['login'] != None and session['login']):
+    #     return render_template('User/editProfile.html')
+    if request.method == 'GET':
+        queryStatement = (
+            f"SELECT zip "
+            f"FROM district_zip;"
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement)
+        zip_codes = cur.fetchall()
+
+        queryStatement = (
+            f"SELECT * "
+            f"FROM city_country;"
+        )
+        cur.execute(queryStatement)
+        city_country = cur.fetchall()
+
+        queryStatement = (
+            f"SELECT address_line "
+            f"FROM customers "
+            f"WHERE email_address = '{session['userEmail']}'; "
+        )
+        cur.execute(queryStatement)
+        address_line = cur.fetchall()
+        print(address_line[0])
+        print(type(address_line[0]))
+        print(address_line[0].get('address_line'))
+        cur.close()
+        countries_dic = get_countries_dictionary(city_country)
+        cities = list(countries_dic.values())
+        cities = [city for sublist in cities for city in sublist]
+        return render_template('User/editProfile.html', zip_codes=zip_codes, cities=cities, today=datetime.date(datetime.now()), address_line=address_line[0].get('address_line'))
+
+    elif request.method == 'POST':
+        userDetails = request.form    
+        # edit user
+        queryStatement_editUser = (
+            f"UPDATE users "
+            f"SET first_name = '{userDetails['first_name']}', "
+            f"last_name = '{userDetails['last_name']}', "
+            f"username = '{userDetails['username']}', "
+            f"email_address = '{userDetails['email_address']}' "
+            f"WHERE email_address = '{session['userEmail']}'; "
+        )
+        # address_line
+        queryStatement_editCustomer = (
+            f"UPDATE customers "
+            f"SET first_name = '{userDetails['first_name']}', "
+            f"last_name = '{userDetails['last_name']}', "
+            f"email_address = '{userDetails['email_address']}', "
+            f"address_line = '{userDetails['address_line']}', "
+            f"zip = '{userDetails['zip_code']}', "
+            f"city = '{userDetails['city']}' "
+            f"WHERE email_address = '{session['userEmail']}'; "   
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement_editUser)
+        cur.execute(queryStatement_editCustomer)
+        mysql.connection.commit()
+        cur.close()
+        # might have to change the session var
+        session['username'] = userDetails['username']
+        session['firstName'] = userDetails['first_name']
+        session['lastName'] = userDetails['last_name']
+        session['userEmail'] = userDetails['email_address']
+            
+
+        flash("Form Submitted Successfully.", "success")
+        return redirect('/')
+
+
     return render_template('User/editProfile.html')
 
 
 @app.route('/profile/<string:username>/change', methods=['GET', "POST"])
 def changePass(username):
+    if request.method == 'POST':
+        userDetails = request.form
+        # Check the password and confirm password
+        if userDetails['password'] != userDetails['confirm_password']:
+            flash('Passwords do not match', 'danger')
+            return render_template('User/changePass.html')
+        p9 = userDetails['password']
+        hashed_pw = generate_password_hash(p9)
+        queryStatement_changePass = (
+            f"UPDATE users "
+            f"SET password = '{hashed_pw}' "
+            f"WHERE email_address = '{session['userEmail']}'; "
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement_changePass)
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Form Submitted Successfully.", "success")
+        return redirect('/')
     return render_template('User/changePass.html')
 
 @app.route('/employee/<string:name>', methods=['GET'])
