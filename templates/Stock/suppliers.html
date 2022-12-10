@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% block content %}
+    <div class="row my-5 ">
+        <div class="card text-center"
+             style="width: 900px; margin: 40px; margin-left: auto; margin-right: auto; padding: 0px;">
+            <div class="card-header">
+                <h2>SUPPLIERS</h2>
+            </div>
+            <div class="card-body">
+                <table class="table my-5">
+                    <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th scope="col">Stock Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telephone</th>
+                        <th scope="col">Address</th>
+
+                    </tr>
+                    </thead>
+                    <h4 class="card-title">Current Stock</h4>
+                    {% for sup in suppliers %}
+                        <tbody>
+                        <tr>
+                            <td>{{ sup['stock_name'] }}</td>
+                            <td>{{ sup['email_address'] }}</td>
+                            <td>{{ sup['telephone_number'] }}</td>
+                            <td style="padding-left: 30px;">{{ sup['address_line'] }} {{ sup['zip'] }} {{ sup['city'] }}</td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+
+            </div>
+
+            <div class="card-footer text-muted">
+                Fredie-And-Friends Cafe
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

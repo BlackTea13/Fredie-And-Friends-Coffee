@@ -615,5 +615,26 @@ def get_stock():
     cur.close()
     return current_stock
 
+@app.route('/suppliers/', methods=['GET'])
+def suppliers():
+    if 'login' not in session:
+        flash('you are not logged in!', 'danger')
+        return redirect('/')
+    if session['userroleid'] == '2' or session['userroleid'] == '3':
+        suppliers = get_suppliers()
+        return render_template('Stock/suppliers.html', suppliers=suppliers)
+    flash("You don't work here!", 'danger')
+    return redirect('/')
+
+def get_suppliers():
+    cur = mysql.connection.cursor()
+    queryStatement = (
+        f"SELECT stock_name, email_address, telephone_number, address_line, zip, city "
+        f"FROM stock join stock_supplier on stock.stock_id = stock_supplier.stock_id "
+        f"join suppliers on suppliers.supplier_id = stock_supplier.supplier_id; ")
+    cur.execute(queryStatement)
+    suppliers = cur.fetchall()
+    cur.close()
+    return suppliers
 if __name__ == '__main__':
     app.run(debug=True)
