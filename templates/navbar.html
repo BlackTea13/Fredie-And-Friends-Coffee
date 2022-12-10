@@ -15,9 +15,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-{#            <img src="static/faf.png" alt="" width="30" height="24" class="d-inline-block align-text-top">#}
-        <img src={{ url_for('static',filename="faf.png") }} alt="" width="50" height="50" class="d-inline-block align-text-top">
-{#          style="object-fit:fill;#}
+            <img src={{ url_for('static',filename="faf.png") }} alt="" width="50" height="50"
+                 class="d-inline-block align-text-top">
         </a>
         <button
                 class="navbar-toggler"
@@ -69,14 +68,15 @@
                         </ul>
                     </li>
                 {% endif %}
+                <li>
+                    <a class="nav-link active" aria-current="page"
+                       href="{{ url_for('timeslot', name = session['firstName']) }}">
+                        Timeslot
+                    </a>
+                </li>
                 {% if session['login'] and session['userroleid']|int == 3 %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ url_for('owner') }}">Owner</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="{{ url_for('all_timeslots') }}">
-                            Schedule
-                        </a>
                     </li>
                 {% endif %}
 
