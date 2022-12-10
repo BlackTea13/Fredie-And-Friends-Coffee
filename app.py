@@ -490,15 +490,35 @@ def owner():
     # delete user
     elif request.method == 'POST' and request.form['delete'] != None:
         userDetails = request.form
+        cur = mysql.connection.cursor()
+        queryStatement_userEmail = (
+            f"SELECT email_address "
+            f"FROM users "
+            f"WHERE username= '{userDetails['delete']}'; "
+        )
+        cur.execute(queryStatement_userEmail)
+        userEmail = cur.fetchone()
+        email = userEmail['email_address']
+        cur.close()
+        cur = mysql.connection.cursor()
         queryStatement_deleteUser = (
             f"DELETE FROM users "
-            f"WHERE username= '{userDetails['delete']}' "
-            f"AND role_id != 3; "
+            f"WHERE email_address= '{email}' "
         )
-        cur = mysql.connection.cursor()
+        queryStatement_deleteCustomer = (
+            f"DELETE FROM customers "
+            f"WHERE email_address= '{email}' "
+        )
+        queryStatement_deleteEmployees = (
+            f"DELETE FROM employees "
+            f"WHERE email_address= '{email}' "
+        )
         cur.execute(queryStatement_deleteUser)
+        cur.execute(queryStatement_deleteCustomer)
+        cur.execute(queryStatement_deleteEmployees)
         mysql.connection.commit()
         cur.close()
+
         flash("Delete Successfully.", "success")
         return redirect('/owner')
 
