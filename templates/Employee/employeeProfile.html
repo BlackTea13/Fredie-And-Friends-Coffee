@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card" style="margin: 40px 20px 40px 40px;">
+        <div class="d-flex flex-column align-items-center text-center p-3 py-4">
+            <img class="rounded-circle mt-5" width="150px" src="{{ url_for('static',filename="user.png") }}" >
+            <span class="font-weight-bold">{{session['username']}}</span>
+            <span class="text-black-50">{{session['userEmail']}}</span>
+            <span> </span>
+        </div>
+      </div>
+      </div>
+    
+    <div class="col-sm-6">
+      <div class="card" style="margin: 40px 40px 40px 20px;">
+        <div class="card-header">Profile</div>
+        <div class="card-body">
+            <h5 class="card-title">
+                User Information
+              </h5>
+                <p class="card-text">First Name: {{session['firstName']}}</p>
+                <p class="card-text">Last Name: {{session['lastName']}}</p>
+                <p class="card-text">User name: {{session['username']}}</p>
+                <p class="card-text">Email address: {{session['userEmail']}}</p>
+                <p class="card-text">Position: {{jobInfo['job_name']}}</p>
+            <p class="card-text">Salary: {{jobInfo['salary']}}</p>
+          <a href="{{ url_for('editProfile', username = session['username']) }}" class="btn btn-primary">Edit profile</a>
+          <a href="{{ url_for('changePass', username = session['username']) }}" class="btn btn-primary">Change password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -179,13 +179,38 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/profile/<string:username>', methods=['GET'])
+def get_employee_info(email):
+    cur = mysql.connection.cursor()
+    queryStatement = (
+        f"SELECT j.job_name, j.salary "
+        f"FROM users as u "
+        f"JOIN employees as e on u.email_address = e.email_address "
+        f"JOIN positions as p on e.employee_id = p.employee_id "
+        f"Join job as j on p.job_id = j.job_id "
+        f"WHERE u.email_address = '{session['userEmail']}';"
+    )
+    cur.execute(queryStatement)
+    employee = cur.fetchone()
+    cur.close()
+    return employee
+
+@app.route('/profile/employee/<string:username>', methods=['GET'])
 def profile(username):
     if 'login' not in session:
         flash('you are not logged in!', 'danger')
         return redirect('/')
+    if session['userroleid'] == 2:
+        jobInfo = get_employee_info(session['userEmail'])
+        return render_template('Employee/employeeProfile.html', jobInfo=jobInfo)
     return render_template('User/profile.html')
 
+@app.route('/profile/<string:username>', methods=['GET'])
+def profile2(username):
+    if 'login' not in session:
+        flash('you are not logged in!', 'danger')
+        return redirect('/')
+    jobInfo = get_employee_info(session['userEmail'])
+    return render_template('Employee/employeeProfile.html', jobInfo=jobInfo)
 
 @app.route('/profile/<string:username>/edit', methods=['GET', "POST"])
 def editProfile(username):
