@@ -2,6 +2,10 @@
 A group project in creating a web application containing a fictional database for coffeeshops and what we think one
 may look like.
 
+Table creation and test data can be found in `tablescript.sql` and
+`insert_test_data.sql` respectively. There are no users at the start,
+please register to use the website.
+
 # Text Report #
 ## Database Schema ##
 We designed our database according to this schema diagram.
