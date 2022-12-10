@@ -261,6 +261,26 @@ def editProfile(username):
 
 @app.route('/profile/<string:username>/change', methods=['GET', "POST"])
 def changePass(username):
+    if request.method == 'POST':
+        userDetails = request.form
+        # Check the password and confirm password
+        if userDetails['password'] != userDetails['confirm_password']:
+            flash('Passwords do not match', 'danger')
+            return render_template('User/changePass.html')
+        p9 = userDetails['password']
+        hashed_pw = generate_password_hash(p9)
+        queryStatement_changePass = (
+            f"UPDATE users "
+            f"SET password = '{hashed_pw}' "
+            f"WHERE email_address = '{session['userEmail']}'; "
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement_changePass)
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Form Submitted Successfully.", "success")
+        return redirect('/')
     return render_template('User/changePass.html')
 
 @app.route('/employee/<string:name>', methods=['GET'])
