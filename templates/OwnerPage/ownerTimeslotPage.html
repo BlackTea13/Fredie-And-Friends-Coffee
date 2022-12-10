@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+    <h2 class="text-center" style="padding-top: 30px">Master Schedule</h2>
+    <table class="table my-5 table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Work Day</th>
+            <th scope="col" style="padding-left: 30px;">Name</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for i in time_slot_data %}
+            <tr>
+                <td>{{ i['work_day'] }}</td>
+                <td style="padding-left: 30px; ">{{ i['first_name'] }} {{ i['last_name'] }}</td>
+                <td>{{ i['start_time'] }}</td>
+                <td>{{ i['end_time'] }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

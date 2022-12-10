@@ -38,7 +38,7 @@
           <a class="nav-link active" href="{{ url_for('view_orders') }}">Orders</a>
         </li>
         {% endif %}
-        {% if session['login'] and session['userroleid']|int > 1 %}
+        {% if session['login'] and session['userroleid']|int == 2 %}
 
         <li class="nav-item dropdown">
           <a
@@ -68,6 +68,11 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('owner') }}">Owner</a>
           </li>
+            <li>
+              <a class="nav-link active" aria-current="page" href="{{ url_for('all_timeslots') }}">
+                Schedule
+              </a>
+            </li>
         {% endif %}
 
         <li class="nav-item dropdown">

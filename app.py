@@ -305,6 +305,32 @@ def timeslot(name):
     time_slot_data = get_time_slot()
     return render_template('/Employee/timeslotPage.html', time_slot_data=time_slot_data)
 
+@app.route('/owner/timeslots', methods=['GET'])
+def all_timeslots():
+    if 'login' not in session:
+        flash('you are not logged in!', 'danger')
+        return redirect('/')
+    time_slot_data = get_all_time_slot()
+    return render_template('/OwnerPage/ownerTimeslotPage.html', time_slot_data=time_slot_data)
+
+def get_all_time_slot():
+    cur = mysql.connection.cursor()
+    queryStatement = (
+        f"SELECT work_day, start_time, end_time, first_name, last_name "
+        f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
+        f"ORDER BY CASE "
+        f"WHEN work_day = 'Monday' THEN 1 "
+        f"WHEN work_day = 'Tuesday' THEN 2 "
+        f"WHEN work_day = 'Wednesday' THEN 3 "
+        f"WHEN work_day = 'Thursday' THEN 4 "
+        f"WHEN work_day = 'Friday' THEN 5 "
+        f"WHEN work_day = 'Saturday' THEN 6 "
+        f"WHEN work_day = 'Sunday' THEN 7 "
+        f"END, start_time ASC; ")
+    cur.execute(queryStatement)
+    allTimeslot = cur.fetchall()
+    cur.close()
+    return allTimeslot
 def get_time_slot():
     cur = mysql.connection.cursor()
     queryStatement = (
