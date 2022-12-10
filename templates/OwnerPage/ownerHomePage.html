@@ -1,0 +1,42 @@
+{% extends 'ownerBase.html' %} {% block content %}
+<div class="display-2 mx-4 my-3">Users</div>
+
+<div
+  class="shadow p-3 mb-5 bg-body rounded"
+  style="margin: 40px 40px 40px 40px"
+>
+<table class="table my-3">
+
+    <thead>
+      <tr>
+        <th scope="col" style="padding-left: 30px;">Username</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Role</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in users_table %} 
+      <tr>
+        <td style="padding-left: 30px; ">{{i['username']}}</td>
+        <td>{{i['first_name']}}</td>
+        <td>{{i['last_name']}}</td>
+        <td>{{i['email_address']}}</td>
+        <td>{{i['role_description']}}</td>
+        <form method="POST">
+            <td>
+                <button class="btn btn-danger" type="submit" name="delete" value="{{i['username']}}" type="submit">Delete</button>
+            </td>
+        </form>
+      </tr>
+      {% endfor %}
+
+
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

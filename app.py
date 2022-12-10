@@ -474,6 +474,35 @@ def get_customer_order(email):
     cur.close()
     return customer_orders
 
+# admin page for users
+@app.route('/owner', methods=['GET', 'POST'])
+def owner():
+    if request.method == 'GET':
+        queryStatement = (
+            f"SELECT username, first_name, last_name, email_address, role_description "
+            f"FROM users join roles r on users.role_id = r.role_id; "
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement)
+        users_table = cur.fetchall()
+        return render_template('OwnerPage/ownerHomePage.html', users_table=users_table)
+    # delete user
+    elif request.method == 'POST' and request.form['delete'] != None:
+        userDetails = request.form
+        queryStatement_deleteUser = (
+            f"DELETE FROM users "
+            f"WHERE username= '{userDetails['delete']}'; "
+        )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement_deleteUser)
+        mysql.connection.commit()
+        cur.close()
+        flash("Delete Successfully.", "success")
+        return redirect('/owner')
+
+    return render_template('OwnerPage/ownerHomePage.html')
+
+
 
 @app.route('/logout')
 def logout():
