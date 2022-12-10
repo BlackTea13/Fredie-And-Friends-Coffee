@@ -480,7 +480,8 @@ def owner():
     if request.method == 'GET':
         queryStatement = (
             f"SELECT username, first_name, last_name, email_address, role_description "
-            f"FROM users join roles r on users.role_id = r.role_id; "
+            f"FROM users join roles r on users.role_id = r.role_id "
+            f"WHERE role_description != 'Owner'; "
         )
         cur = mysql.connection.cursor()
         cur.execute(queryStatement)
@@ -491,7 +492,8 @@ def owner():
         userDetails = request.form
         queryStatement_deleteUser = (
             f"DELETE FROM users "
-            f"WHERE username= '{userDetails['delete']}'; "
+            f"WHERE username= '{userDetails['delete']}' "
+            f"AND role_id != 3; "
         )
         cur = mysql.connection.cursor()
         cur.execute(queryStatement_deleteUser)
