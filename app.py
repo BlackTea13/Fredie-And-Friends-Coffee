@@ -147,7 +147,6 @@ def login():
     elif request.method == 'POST':
         loginForm = request.form
         username = loginForm['username']
-        user_data = get_user_data(username)
         cur = mysql.connection.cursor()
         queryStatement_user = f"SELECT * FROM users WHERE username = '{username}'"
         numRow_user = cur.execute(queryStatement_user)
@@ -176,10 +175,6 @@ def login():
         cur.close()
         return redirect('/')
     return render_template('login.html')
-
-
-def get_user_data(username) -> dict:
-    return None
 
 
 @app.route('/profile/<string:username>', methods=['GET'])
@@ -214,8 +209,13 @@ def get_time_slot():
     
 @app.route('/menu/', methods=['GET', 'POST'])
 def menu():
-    menu = getAllMenu()
-    return render_template('menu.html', menu=menu)
+    if request.method == 'GET':
+        menu = getAllMenu()
+        return render_template('menu.html', menu=menu)
+    elif request.method == 'POST':
+        if session.items == 0 or not session['login']:
+            flash('You are not logged in!', 'danger')
+            return redirect('/')
 
 
 def getAllMenu():
