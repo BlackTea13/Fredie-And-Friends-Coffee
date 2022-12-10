@@ -181,6 +181,9 @@ def login():
 
 @app.route('/profile/<string:username>', methods=['GET'])
 def profile(username):
+    if 'login' not in session:
+        flash('you are not logged in!', 'danger')
+        return redirect('/')
     return render_template('User/profile.html')
 
 
@@ -189,6 +192,9 @@ def editProfile(username):
     # if (session['login'] != None and session['login']):
     #     return render_template('User/editProfile.html')
     if request.method == 'GET':
+        if 'login' not in session:
+            flash('you are not logged in!', 'danger')
+            return redirect('/')
         queryStatement = (
             f"SELECT zip "
             f"FROM district_zip;"
@@ -221,6 +227,9 @@ def editProfile(username):
         return render_template('User/editProfile.html', zip_codes=zip_codes, cities=cities, today=datetime.date(datetime.now()), address_line=address_line[0].get('address_line'))
 
     elif request.method == 'POST':
+        if 'login' not in session:
+            flash('you are not logged in!', 'danger')
+            return redirect('/')
         userDetails = request.form    
         # edit user
         queryStatement_editUser = (
@@ -264,6 +273,9 @@ def editProfile(username):
 @app.route('/profile/<string:username>/change', methods=['GET', "POST"])
 def changePass(username):
     if request.method == 'POST':
+        if 'login' not in session:
+            flash('you are not logged in!', 'danger')
+            return redirect('/')
         userDetails = request.form
         # Check the password and confirm password
         if userDetails['password'] != userDetails['confirm_password']:
@@ -287,6 +299,9 @@ def changePass(username):
 
 @app.route('/employee/<string:name>', methods=['GET'])
 def timeslot(name):
+    if 'login' not in session:
+        flash('you are not logged in!', 'danger')
+        return redirect('/')
     time_slot_data = get_time_slot()
     return render_template('/Employee/timeslotPage.html', time_slot_data=time_slot_data)
 
@@ -392,6 +407,9 @@ def view_orders():
             cost_for_each_order(orders)
             return render_template('Orders/view_orders_customer.html', orders=orders)
     elif request.method == 'POST':
+        if 'login' not in session:
+            flash('you are not logged in!', 'danger')
+            return redirect('/')
         order_id_completed = request.form['order']
         queryStatement = (
             f"UPDATE orders "
@@ -465,6 +483,9 @@ def logout():
 
 @app.route('/stock/', methods=['GET'])
 def stock():
+    if 'login' not in session:
+        flash('you are not logged in!', 'danger')
+        return redirect('/')
     if session['userroleid'] == '2' or session['userroleid'] == '3':
         stock = get_stock()
         return render_template('Stock/stock.html', stock=stock)
