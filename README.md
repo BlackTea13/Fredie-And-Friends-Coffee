@@ -7,6 +7,9 @@ Table creation and test data can be found in `tablescript.sql` and
 please register to use the website.
 
 # Text Report #
+## ER Diagram ##
+![schema](/E-R.drawio.png "Schema")
+
 ## Database Schema ##
 We designed our database according to this schema diagram.
 ![schema](/schema.png "Schema")
