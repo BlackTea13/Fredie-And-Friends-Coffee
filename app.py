@@ -108,6 +108,7 @@ def is_username_unique(username):
         return False
     return True
 
+
 def is_email_unique(email):
     tables_to_query = ['users', 'customers', 'employees', 'suppliers']
     
@@ -126,6 +127,7 @@ def is_email_unique(email):
     if email in emails:
         return False
     return True
+        
         
 # this function only works with SQL query output
 # as the argument
@@ -375,12 +377,6 @@ def getAllMenu():
     return menu
 
 
-
-@app.route('/create-order/', methods=['GET', 'POST'])
-def write_blog():
-    return render_template('create-order.html')
-
-
 @app.route('/view-orders/', methods=['GET', 'POST'])
 def view_orders():
     if request.method == 'GET':
@@ -460,18 +456,6 @@ def get_customer_order(email):
     cur.close()
     return customer_orders
 
-# @app.route('/employee/')
-# def my_blogs():
-#     return render_template('my-orders.html')
-
-
-# @app.route('/employee/schedule')
-# def my_blogs():
-#     return render_template('my-orders.html')
-
-# @app.route('/master/')
-# def my_blogs():
-#     return render_template('master.html')
 
 @app.route('/logout')
 def logout():
@@ -495,7 +479,6 @@ def get_stock():
     current_stock = cur.fetchall()
     cur.close()
     return current_stock
-
 
 if __name__ == '__main__':
     app.run(debug=True)
