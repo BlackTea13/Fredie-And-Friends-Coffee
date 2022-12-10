@@ -17,18 +17,14 @@
 
     <div class="header" style="height: 500px;">
       <img src={{ url_for('static',filename="homepage.jpeg") }} 
-          style="object-fit:fill;
-            display: block;
-            padding-bottom: 30px;
-            max-height:500px;
-            width: 100%;"/>
+          style="object-fit:fill;"/>
       <div class="centered" >
           <h1 style="font-size: 270%; color: #dbc7a0;">Fredie-And-Friends Cafe</h1>
-          <h4 style="font-size: 150%; color: #968160;"> Best place for getting new experience.</h2>
+          <h4 style="font-size: 150%; color: #968160;"> Best place for getting new experience.</h4>
       </div>
 
       <a class="btn" 
-      href="#"
+      href="{{ url_for('menu') }}"
       style="  
         position: absolute;
         top: 42%;
@@ -45,11 +41,10 @@
         <div class="card-body" style="color: #603b13;">
           <h3 class="card-title" >WHO ARE WE</h3>
           <hr>
-          <p class="card-text">Fredie-And-Friends Cafe is the cafe the form with two friends and Fredie.
-          Our intention for open this cafe is to mkae the people enjoy their drink with care
-          to have the costomer come out from their home or office to our shop.
-          To change the enviroment meeting new people change the mood.
-          Our priority is our customers have good exsotic experience with us</p>
+          <p class="card-text">Fredie-And-Friends Café was founded and eponymously named by Fredie and his two friends,
+          Robert and Yang. With the intentions of providing the most comfortable and enjoyable experience,
+          we have finely tuned our café to pass even the most rigorous vibe checks. Our customers are our priority, so
+          expect to have your best café experience yet. You'll like it, Picasso</p>
           <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
           <small class="card-text">Fredie-And-Friends Cafe</small>
         </div>
