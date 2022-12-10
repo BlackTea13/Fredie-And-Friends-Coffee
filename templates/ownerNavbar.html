@@ -35,31 +35,23 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Original Home</a>
                 </li>
-{#                {% if session['login'] and session['userroleid']|int > 1 %}#}
-{#                    <li class="nav-item dropdown">#}
-{#                        <a#}
-{#                                class="nav-link dropdown-toggle active"#}
-{#                                href="#"#}
-{#                                role="button"#}
-{#                                data-bs-toggle="dropdown"#}
-{#                                aria-expanded="false"#}
-{#                        >#}
-{#                            Employee#}
-{#                        </a>#}
-{#                        <ul class="dropdown-menu">#}
-                            <li>
-                        <a class="nav-link active" aria-current="page" href="{{ url_for('all_timeslots') }}">
-                                    Schedule
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link active" aria-current="page" href="{{ url_for('stock') }}">
-                                    Stock
-                                </a>
-                            </li>
-{#                        </ul>#}
-{#                    </li>#}
-{#                {% endif %}#}
+
+                <li>
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('all_timeslots') }}">
+                        Schedule
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('stock') }}">
+                        Stock
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('suppliers') }}">
+                        Suppliers
+                    </a>
+                </li>
 
 
                 <li class="nav-item dropdown">
