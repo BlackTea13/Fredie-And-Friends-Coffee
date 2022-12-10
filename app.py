@@ -213,19 +213,72 @@ def menu():
         menu = getAllMenu()
         return render_template('menu.html', menu=menu)
     elif request.method == 'POST':
-        if session.items == 0 or not session['login']:
-            flash('You are not logged in!', 'danger')
-            return redirect('/')
+        if 'login' not in session:
+            flash('you are not logged in!', 'danger')
+            return redirect('/menu')
+        elif session['userroleid'] == '2' or session['userroleid'] == '3':
+            flash('you are not a customer! LEAVE.', 'danger')
+            return redirect('/menu')
+        
+        form = request.form
+        menu = getAllMenu()
+        quantities = {}
+        for item in menu:
+            itemid = item['product_id']
+            itemname = item['product_name']
+            if form[itemname] != '' and form[itemname] != '0':
+                quantities[itemid] = form[itemname]
+        if len(quantities.keys()) == 0:
+            flash('nothing in your order!', 'danger')
+            return redirect('/menu/')
+        print(quantities)
+        
+        customer_Id = get_customer_Id(session['userEmail'])
+        cur = mysql.connection.cursor()
+        queryStatement_orders = (
+            f"INSERT INTO orders(customer_id, order_date, order_status) "
+            f"VALUES ('{customer_Id}', '{datetime.date(datetime.now())}', 'incomplete');"
+        )
+        cur.execute(queryStatement_orders)
+        mysql.connection.commit()
+        cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute(f"SELECT max(order_id) as id FROM orders;")
+        order_id = cur.fetchone()['id']
+        print(f'LAST ID: {order_id}')
+        order_lines = order_line_gen(order_id, quantities)
+        cur.execute(order_lines)
+        mysql.connection.commit()
+        cur.close()
+        flash('order placed!')
+        return redirect('/view-orders')
+        
+        
+def order_line_gen(order_id, quantities): 
+    query = "INSERT INTO order_line VALUES "
+    for item in quantities:
+        query += f'({order_id}, {item}, {quantities[item]}),'
+    query = query[:-1]
+    query += ';'
+    print(query)
+    return query
+        
 
+def get_customer_Id(email):
+    cur = mysql.connection.cursor()
+    cur.execute(f'SELECT customer_id FROM customers WHERE email_address = "{email}"')
+    output = cur.fetchone()
+    cur.close()
+    return output['customer_id']
+    
 
 def getAllMenu():
     cur = mysql.connection.cursor()
     queryStatement = (
-    f"Select product_name, price_per_unit "
+    f"SELECT product_id, product_name, price_per_unit "
     f"FROM menu; ")
     cur.execute(queryStatement)
     menu = cur.fetchall()
-    print(menu)
     cur.close()
     return menu
 
@@ -273,7 +326,8 @@ def get_all_orders():
         f"SELECT ol.order_id, first_name, last_name, order_date, order_status, product_name, quantity, price_per_unit "
         f"FROM orders join customers c on c.customer_id = orders.customer_id "
         f"join order_line ol on orders.order_id = ol.order_id "
-        f"join menu m on ol.product_id = m.product_id; ")
+        f"join menu m on ol.product_id = m.product_id "
+        f"ORDER BY order_id DESC;")
     cur.execute(queryStatement)
     all_orders = cur.fetchall()
     cur.close()
@@ -307,7 +361,8 @@ def get_customer_order(email):
         f"FROM orders join customers c on c.customer_id = orders.customer_id "
         f"join order_line ol on orders.order_id = ol.order_id "
         f"join menu m on ol.product_id = m.product_id "
-        f"WHERE email_address = '{email}';")
+        f"WHERE email_address = '{email}' "
+        f"ORDER BY order_id DESC;")
     cur.execute(queryStatement)
     customer_orders = cur.fetchall()
     cur.close()
