@@ -462,27 +462,15 @@ def view_orders():
             flash('you are not logged in!', 'danger')
             return redirect('/')
         order_id_completed = request.form['order']
-        order_id_cancelled = request.form['cancel']
-        if ('order' in request.form):
-            queryStatement = (
-                f"UPDATE orders "
-                f"SET order_status = 'complete' "
-                f"WHERE order_id = %s;"
-            )
-            cur = mysql.connection.cursor()
-            cur.execute(queryStatement, (order_id_completed,))
-            mysql.connection.commit()
-            cur.close()
-        else:
-            queryStatement2 = (
-                f"UPDATE orders "
-                f"SET order_status = 'cancelled' "
-                f"WHERE order_id = %s;"
-            )
-            cur = mysql.connection.cursor()
-            cur.execute(queryStatement2, (order_id_cancelled,))
-            mysql.connection.commit()
-            cur.close()
+        queryStatement = (
+             f"UPDATE orders "
+             f"SET order_status = 'complete' "
+             f"WHERE order_id = %s;"
+         )
+        cur = mysql.connection.cursor()
+        cur.execute(queryStatement, (order_id_completed,))
+        mysql.connection.commit()
+        cur.close()
         if 'userroleid' not in session:
             flash('You are not logged in!', 'danger')
             return redirect('/')
