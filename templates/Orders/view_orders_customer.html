@@ -1,73 +1,80 @@
 {% extends 'base.html' %} {% block content %} {% for order in orders %}
-<section class="h-50 h-custom" style="background-color: #eee">
-  <div class="container py-5 h-50">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-8 col-xl-6">
-        <div
-          class="card border-top border-bottom border-3"
-          {% if orders[order][0]['order_status'] == 'incomplete' %}
-          style="border-color: #ED1C24 !important"
-          {% elif orders[order][0]['order_status'] == 'complete' %}
-          style="border-color: #22B14C !important"
-          {%endif%} 
-        >
-          <div class="card-body p-3">
-            <p class="lead fw-bold mb-2" style="color: #f37a27">
-              Purchase Receipt
-            </p>
+    <section class="h-50 h-custom" style="background-color: #eee">
+        <div class="container py-5 h-50">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+                    <div
+                            class="card border-top border-bottom border-3"
+                            {% if orders[order][0]['order_status'] == 'incomplete' %}
+                            style="border-color: #ED1C24 !important"
+                            {% elif orders[order][0]['order_status'] == 'complete' %}
+                            style="border-color: #22B14C !important"
+                            {% endif %}
+                    >
+                        <div class="card-body p-3">
+                            <p class="lead fw-bold mb-2" style="color: #f37a27">
+                                Purchase Receipt
+                            </p>
 
-            <div class="row">
-              <div class="col mb-2">
-                <p class="small text-muted mb-1">Date</p>
-                <p>{{ orders[order][0]['order_date'] }}</p>
-              </div>
-              <div class="col mb-2">
-                <p class="small text-muted mb-1">Order No.</p>
-                <p>{{ orders[order][0]['order_id'] }}</p>
-              </div>
-              <div class="col mb-2">
-                <p class="small text-muted mb-1">Status</p>
-                <p>{{ orders[order][0]['order_status'] }}</p>
-              </div>
-            </div>
+                            <div class="row">
+                                <div class="col mb-2">
+                                    <p class="small text-muted mb-1">Date</p>
+                                    <p>{{ orders[order][0]['order_date'] }}</p>
+                                </div>
+                                <div class="col mb-2">
+                                    <p class="small text-muted mb-1">Order No.</p>
+                                    <p>{{ orders[order][0]['order_id'] }}</p>
+                                </div>
+                                <div class="col mb-2">
+                                    <p class="small text-muted mb-1">Status</p>
+                                    <p>{{ orders[order][0]['order_status'] }}</p>
+                                </div>
+                            </div>
 
-            <div class="mx-n5 px-5 py-4 mb-2" style="background-color: #f2f2f2">
-              {% for item in orders[order]%}
-              <div class="row">
-                <div class="col">
-                  <p>{{ item['product_name']}}</p>
+                            <div class="mx-n5 px-5 py-4 mb-2" style="background-color: #f2f2f2">
+                                {% for item in orders[order] %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>{{ item['product_name'] }}</p>
+                                        </div>
+                                        <div class="col">
+                                            <p>{{ item['quantity'] }}</p>
+                                        </div>
+                                        <div class="col md-auto">
+                                            <p>{{ item['price_per_unit'] }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="row my-4 mb-1">
+                                <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                                    <p class="lead fw-bold mb-0" style="color: #f37a27">
+                                        Total Cost: {{ orders[order][-1]['total_cost'] }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p class="mt-3 pt-1 mb-1">
+                                Want any help?
+                                <a
+                                        href="https://www.youtube.com/watch?v=CelgqNnv0wU&ab_channel=AUGH"
+                                        style="color: #f37a27"
+                                >Please contact us</a
+                                >
+                            </p>
+                            {% if orders[order][0]['order_status'] == 'incomplete' %}
+                                <form method="POST" id="cancel">
+                                    <button type="submit" class="form-control" name="cancel" id="cancel"
+                                            value={{ order }}>Cancel Order
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                  <p>{{ item['quantity']}}</p>
-                </div>
-                <div class="col md-auto">
-                  <p>{{ item['price_per_unit']}}</p>
-                </div>
-              </div>
-              {% endfor %}
             </div>
-
-            <div class="row my-4 mb-1">
-              <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-                <p class="lead fw-bold mb-0" style="color: #f37a27">
-                  Total Cost: {{orders[order][-1]['total_cost']}}
-                </p>
-              </div>
-            </div>
-
-            <p class="mt-3 pt-1 mb-1">
-              Want any help?
-              <a
-                href="https://www.youtube.com/watch?v=CelgqNnv0wU&ab_channel=AUGH"
-                style="color: #f37a27"
-                >Please contact us</a
-              >
-            </p>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
 {% endfor %} {% endblock %}
