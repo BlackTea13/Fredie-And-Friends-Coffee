@@ -156,7 +156,7 @@ CREATE TABLE users
     first_name varchar(30),
     last_name  varchar(30),
     username   varchar(20)  NOT NULL UNIQUE,
-    email      varchar(30)  NOT NULL UNIQUE,
+    email_address      varchar(30)  NOT NULL UNIQUE,
     password   varchar(128) NOT NULL,
     role_id    int          NOT NULL,
     PRIMARY KEY (user_id),
