@@ -141,3 +141,8 @@ VALUES
     (1, 'Customer'),
     (2, 'Employees'),
     (3, 'Owner');
+
+INSERT INTO users(first_name, last_name, username, email_address, password, role_id)
+VALUES
+    ('employee', 'employee', 'employee', 'employee@employee.com',  'pbkdf2:sha256:260000$Ma2YrkddfCEuxHD7$c1a2faa641be836afa2a2dcd98ae86f1a497be23e1df167d4d376e57b93fd0ce', '2'),
+    ('owner', 'owner', 'owner', 'owner@owner.com', 'pbkdf2:sha256:260000$ne3VVnTjWuEldB1M$3bd2528a6ffbbfc4b65feb08627a63e43525834e9cb5ae3f76f2fc63d071d227', '3');
