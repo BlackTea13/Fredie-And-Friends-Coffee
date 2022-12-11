@@ -16,11 +16,11 @@
     </div>
     <div class="mb-3">
       <label for="last_name" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="last_name" required name="last_name" />
+      <input type="text" class="form-control" id="last_name" required name="last_name" maxlength ="30"/>
     </div>
     <div class="mb-3">
       <label for="username" class="form-label">User name</label>
-      <input type="text" class="form-control" id="username" required name="username" />
+      <input type="text" class="form-control" id="username" required name="username" maxlength ="30"/>
     </div>
 
     <div class="mb-3">
@@ -38,6 +38,7 @@
         name="email"
         required
         aria-describedby="emailHelp"
+        maxlength ="300"
       />
       <div id="emailHelp" class="form-text">
         We'll never share your email with anyone else.
@@ -50,6 +51,7 @@
         class="form-control"
         name="address_line"
         required
+        maxlength ="30"
       </input>
     </div>
 

@@ -15,26 +15,26 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <label class="labels">Name</label>
-                        <input type="text" name="first_name" class="form-control" required placeholder="first name" value="{{session['firstName']}}">
+                        <input type="text" name="first_name" class="form-control" required placeholder="first name" value="{{session['firstName']}}" maxlength ="20">
                     </div>
                     <div class="col-md-6">
                         <label class="labels">Surname</label>
-                        <input type="text" name="last_name" class="form-control" required value="{{session['lastName']}}" placeholder="last name">
+                        <input type="text" name="last_name" class="form-control" required value="{{session['lastName']}}" placeholder="last name" maxlength ="20">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12">
                         <label class="labels">Username</label>
-                        <input type="text" name="username" class="form-control" required placeholder="username" value="{{session['username']}}">
+                        <input type="text" name="username" class="form-control" required placeholder="username" value="{{session['username']}}" maxlength ="20">
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Email</label>
-                        <input type="text" name="email_address" class="form-control" required placeholder="email" value="{{session['userEmail']}}">
+                        <input type="text" name="email_address" class="form-control" required placeholder="email" value="{{session['userEmail']}}" maxlength ="300">
                     </div>
                     {% if session['userroleid']|int != 3 %}
                     <div class="col-md-12">
                         <label class="labels">Address Line</label>
-                        <textarea class="form-control" name="address_line" required placeholder="enter address line">{{address_line}}</textarea>
+                        <textarea class="form-control" name="address_line" required placeholder="enter address line" maxlength ="30">{{address_line}}</textarea>
                     </div>
                     
                 </div>
