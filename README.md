@@ -3,8 +3,9 @@ A group project in creating a web application containing a fictional database fo
 may look like.
 
 Table creation and test data can be found in `tablescript.sql` and
-`insert_test_data.sql` respectively. There are no users at the start,
-please register to use the website.
+`insert_test_data.sql` respectively. This will also be included at
+the bottom of the README file.
+There are no users at the start, please register to use the website.
 
 # Text Report #
 ## ER Diagram ##
