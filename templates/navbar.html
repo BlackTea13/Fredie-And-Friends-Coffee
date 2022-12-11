@@ -73,12 +73,22 @@
                         </ul>
                     </li>
                 {% endif %}
+                {% if session['login'] and session['userroleid']|int == 3 %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('stock') }}">
+                        Stock
+                    </a>
+                </li>
+                {% endif %}
+                {% if session['login'] and session['userroleid']|int == 2 %}
                 <li>
                     <a class="nav-link active" aria-current="page"
                        href="{{ url_for('timeslot', name = session['firstName']) }}">
                         Timeslot
                     </a>
                 </li>
+                {% endif %}
+
                 {% if session['login'] and session['userroleid']|int == 3 %}
                     <li>
                         <a class="nav-link active" aria-current="page" href="{{ url_for('suppliers') }}">
