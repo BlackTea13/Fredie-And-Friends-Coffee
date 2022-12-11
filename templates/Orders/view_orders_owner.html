@@ -62,12 +62,13 @@
                                 >Please contact us</a
                                 >
                             </p>
-
                             {% if orders[order][0]['order_status'] == 'incomplete' %}
-                                <form method="POST">
+                                <form method="POST" id="order">
                                     <button type="submit" class="form-control" name="order" id="order"
                                             value={{ order }}>Complete Order
                                     </button>
+                                </form>
+                                <form method="POST" id="cancel">
                                     <button type="submit" class="form-control" name="cancel" id="cancel"
                                             value={{ order }}>Cancel Order
                                     </button>
