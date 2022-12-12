@@ -146,3 +146,10 @@ INSERT INTO users(first_name, last_name, username, email_address, password, role
 VALUES
     ('employee', 'employee', 'employee', 'employee@employee.com',  'pbkdf2:sha256:260000$Ma2YrkddfCEuxHD7$c1a2faa641be836afa2a2dcd98ae86f1a497be23e1df167d4d376e57b93fd0ce', '2'),
     ('owner', 'owner', 'owner', 'owner@owner.com', 'pbkdf2:sha256:260000$ne3VVnTjWuEldB1M$3bd2528a6ffbbfc4b65feb08627a63e43525834e9cb5ae3f76f2fc63d071d227', '3');
+
+
+INSERT INTO employees (first_name, last_name, date_of_birth, email_address, time_slot_id, address_line, zip, city)
+VALUES ('employee', 'employee', '2001-11-11', 'employee@employee.com', 1, 'employee road 1','10240', 'bangkok');
+
+INSERT INTO positions(employee_id, job_id)
+    VALUES (11, 1);
