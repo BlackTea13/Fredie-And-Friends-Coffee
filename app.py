@@ -361,7 +361,15 @@ def get_time_slot():
     queryStatement = (
     f"SELECT first_name, last_name, work_day, start_time, end_time "
     f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
-    f"WHERE email_address = '{session['userEmail'] }'; ")
+    f"WHERE email_address = '{session['userEmail'] }'; "
+    f"WHEN work_day = 'Monday' THEN 1 "
+    f"WHEN work_day = 'Tuesday' THEN 2 "
+    f"WHEN work_day = 'Wednesday' THEN 3 "
+    f"WHEN work_day = 'Thursday' THEN 4 "
+    f"WHEN work_day = 'Friday' THEN 5 "
+    f"WHEN work_day = 'Saturday' THEN 6 "
+    f"WHEN work_day = 'Sunday' THEN 7 "
+    f"END, start_time ASC; ")
     cur.execute(queryStatement)
     timeslot = cur.fetchall()
     cur.close()
