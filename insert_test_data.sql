@@ -60,7 +60,8 @@ VALUES
   ('Rajah','Quinlan','1977-08-21 ','proin.eget@protonmail.ca',4,'Ap #376-3657 Suspendisse Avenue',11100,'phuket'),
   ('Bethany','Dawn','1994-01-09 ','felis.eget@aol.com',1,'1674 Orci. Rd.',10240,'singapore'),
   ('Irene','Oprah','1946-06-26 ','ipsum.leo@hotmail.com',2,'5047 Facilisis St.',10555,'singapore'),
-  ('owner', 'owner', '1901-01-01', 'owner@owner.com', '5', 'boss baby house', '10240', 'bangkok');
+  ('owner', 'owner', '1901-01-01', 'owner@owner.com', '5', 'boss baby house', '10240', 'bangkok'),
+  ('employee', 'employee', '2001-11-11', 'employee@employee.com', 1, 'employee road 1','10240', 'bangkok');
 
 INSERT INTO suppliers (telephone_number,email_address,address_line,zip,city)
 VALUES
