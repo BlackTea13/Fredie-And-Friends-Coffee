@@ -18,13 +18,15 @@ We designed our database according to this schema diagram.
 This schema diagram reflects the expectations we had for the final product.
 They were mostly met, a few features that are not in the current version include
 
-1. displaying supplier info
-2. adjusting stock at runtime based on orders
-3. creating invoices.
+1. adjusting stock at runtime based on orders
+2. creating invoices ready made to be handed in to tax authorities
 
-These were not done to leave time to complete the main features,
-which were creating orders and letting employees check them off, as well
-as displaying the employee schedules, and creation of customer profiles.
+These were not done to leave time to complete the main features. Thus,
+many important expectations and features were met, such as
+1. creating orders online
+2. letting employees check them off
+3. displaying the employee schedules
+4. creation of customer profiles
+5. storing history of orders
 
-
-
+Overall the website is quite useful :)
