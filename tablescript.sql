@@ -87,7 +87,7 @@ CREATE TABLE orders(
     order_date date NOT NULL,
     order_status ENUM('complete', 'incomplete', 'cancelled') NOT NULL,
     PRIMARY KEY (order_id),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE SET NULL
 );
 
 DROP TABLE IF EXISTS order_line;
