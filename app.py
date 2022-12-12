@@ -269,7 +269,8 @@ def editProfile(username):
             f"UPDATE users "
             f"SET first_name = '{userDetails['first_name']}', "
             f"last_name = '{userDetails['last_name']}', "
-            f"username = '{userDetails['username']}' "
+            f"username = '{userDetails['username']}', "
+            f"email_address = '{userDetails['email_address']}' "
             f"WHERE email_address = '{session['userEmail']}'; "
         )
         # address_line
@@ -278,6 +279,7 @@ def editProfile(username):
                 f"UPDATE customers "
                 f"SET first_name = '{userDetails['first_name']}', "
                 f"last_name = '{userDetails['last_name']}', "
+                f"email_address = '{userDetails['email_address']}', "
                 f"address_line = '{userDetails['address_line']}', "
                 f"zip = '{userDetails['zip_code']}', "
                 f"city = '{userDetails['city']}' "
@@ -288,6 +290,7 @@ def editProfile(username):
                 f"UPDATE employees "
                 f"SET first_name = '{userDetails['first_name']}', "
                 f"last_name = '{userDetails['last_name']}', "
+                f"email_address = '{userDetails['email_address']}', "
                 f"address_line = '{userDetails['address_line']}', "
                 f"zip = '{userDetails['zip_code']}', "
                 f"city = '{userDetails['city']}' "
@@ -297,7 +300,8 @@ def editProfile(username):
             queryStatement_editCustomer = (
                 f"UPDATE employees "
                 f"SET first_name = '{userDetails['first_name']}', "
-                f"last_name = '{userDetails['last_name']}' "
+                f"last_name = '{userDetails['last_name']}', "
+                f"email_address = '{userDetails['email_address']}' "
                 f"WHERE email_address = '{session['userEmail']}'; "   
             )
 
@@ -311,6 +315,7 @@ def editProfile(username):
         session['username'] = userDetails['username']
         session['firstName'] = userDetails['first_name']
         session['lastName'] = userDetails['last_name']
+        session['userEmail'] = userDetails['email_address']
             
 
         flash("Form Submitted Successfully.", "success")
