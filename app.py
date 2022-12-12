@@ -212,7 +212,7 @@ def profile2(username):
     jobInfo = get_employee_info(session['userEmail'])
     return render_template('Employee/employeeProfile.html', jobInfo=jobInfo)
 
-@app.route('/profile/<string:username>/edit', methods=['GET', "POST"])
+@app.route('/profile/edit/<string:username>', methods=['GET', "POST"])
 def editProfile(username):
     # if (session['login'] != None and session['login']):
     #     return render_template('User/editProfile.html')
@@ -234,21 +234,29 @@ def editProfile(username):
         )
         cur.execute(queryStatement)
         city_country = cur.fetchall()
-
-        queryStatement = (
-            f"SELECT address_line "
-            f"FROM customers "
-            f"WHERE email_address = '{session['userEmail']}'; "
-        )
-        cur.execute(queryStatement)
+        if int(session['userroleid']) == 1:
+            queryStatement = (
+                f"SELECT address_line "
+                f"FROM customers "
+                f"WHERE email_address = '{session['userEmail']}'; "
+            )
+            cur.execute(queryStatement)
+        elif int(session['userroleid']) == 2 or int(session['userroleid']) == 3:
+            queryStatement = (
+                f"SELECT address_line "
+                f"FROM employees "
+                f"WHERE email_address = '{session['userEmail']}'; "
+            )
+            cur.execute(queryStatement)    
         address_line = cur.fetchall()
-        print(address_line[0])
-        print(type(address_line[0]))
-        print(address_line[0].get('address_line'))
+        print(address_line)
+        print(session['userEmail'])
         cur.close()
         countries_dic = get_countries_dictionary(city_country)
         cities = list(countries_dic.values())
         cities = [city for sublist in cities for city in sublist]
+
+
         return render_template('User/editProfile.html', zip_codes=zip_codes, cities=cities, today=datetime.date(datetime.now()), address_line=address_line[0].get('address_line'))
 
     elif request.method == 'POST':
@@ -295,7 +303,7 @@ def editProfile(username):
     return render_template('User/editProfile.html')
 
 
-@app.route('/profile/<string:username>/change', methods=['GET', "POST"])
+@app.route('/profile/change/<string:username>', methods=['GET', "POST"])
 def changePass(username):
     if request.method == 'POST':
         if 'login' not in session:
