@@ -269,21 +269,39 @@ def editProfile(username):
             f"UPDATE users "
             f"SET first_name = '{userDetails['first_name']}', "
             f"last_name = '{userDetails['last_name']}', "
-            f"username = '{userDetails['username']}', "
-            f"email_address = '{userDetails['email_address']}' "
+            f"username = '{userDetails['username']}' "
             f"WHERE email_address = '{session['userEmail']}'; "
         )
         # address_line
-        queryStatement_editCustomer = (
-            f"UPDATE customers "
-            f"SET first_name = '{userDetails['first_name']}', "
-            f"last_name = '{userDetails['last_name']}', "
-            f"email_address = '{userDetails['email_address']}', "
-            f"address_line = '{userDetails['address_line']}', "
-            f"zip = '{userDetails['zip_code']}', "
-            f"city = '{userDetails['city']}' "
-            f"WHERE email_address = '{session['userEmail']}'; "   
-        )
+        if int(session['userroleid']) == 1:
+            queryStatement_editCustomer = (
+                f"UPDATE customers "
+                f"SET first_name = '{userDetails['first_name']}', "
+                f"last_name = '{userDetails['last_name']}', "
+                f"address_line = '{userDetails['address_line']}', "
+                f"zip = '{userDetails['zip_code']}', "
+                f"city = '{userDetails['city']}' "
+                f"WHERE email_address = '{session['userEmail']}'; "   
+            )
+        elif int(session['userroleid']) == 2:
+            queryStatement_editCustomer = (
+                f"UPDATE employees "
+                f"SET first_name = '{userDetails['first_name']}', "
+                f"last_name = '{userDetails['last_name']}', "
+                f"address_line = '{userDetails['address_line']}', "
+                f"zip = '{userDetails['zip_code']}', "
+                f"city = '{userDetails['city']}' "
+                f"WHERE email_address = '{session['userEmail']}'; "   
+            )
+        elif int(session['userroleid']) == 3:
+            queryStatement_editCustomer = (
+                f"UPDATE employees "
+                f"SET first_name = '{userDetails['first_name']}', "
+                f"last_name = '{userDetails['last_name']}' "
+                f"WHERE email_address = '{session['userEmail']}'; "   
+            )
+
+
         cur = mysql.connection.cursor()
         cur.execute(queryStatement_editUser)
         cur.execute(queryStatement_editCustomer)
@@ -293,7 +311,6 @@ def editProfile(username):
         session['username'] = userDetails['username']
         session['firstName'] = userDetails['first_name']
         session['lastName'] = userDetails['last_name']
-        session['userEmail'] = userDetails['email_address']
             
 
         flash("Form Submitted Successfully.", "success")
@@ -369,7 +386,8 @@ def get_time_slot():
     queryStatement = (
     f"SELECT first_name, last_name, work_day, start_time, end_time "
     f"FROM employees join time_slot ts on employees.time_slot_id = ts.time_slot_id "
-    f"WHERE email_address = '{session['userEmail'] }'; "
+    f"WHERE email_address = '{session['userEmail'] }' "
+    f"ORDER BY CASE "
     f"WHEN work_day = 'Monday' THEN 1 "
     f"WHEN work_day = 'Tuesday' THEN 2 "
     f"WHEN work_day = 'Wednesday' THEN 3 "
